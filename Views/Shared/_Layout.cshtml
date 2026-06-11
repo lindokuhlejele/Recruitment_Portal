@@ -1,36 +1,104 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
-    @Styles.Render("~/Content/css")
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Royal Recruitment Portal</title>
+
+    @*@Styles.Render("~/Content/css")*@
+
     @Scripts.Render("~/bundles/modernizr")
+    <!-- Tailwind CDN (IMPORTANT - without this your UI breaks) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: ui-sans-serif, system-ui;
+        }
+    </style>
 </head>
-<body>
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
-        <div class="container">
-            @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Toggle navigation" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
-                <ul class="navbar-nav flex-grow-1">
-                    <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("About", "About", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                </ul>
+<body class="bg-[#F7F9F6]">
+
+    <!-- HEADER -->
+    <header class="border-b bg-white/90 backdrop-blur-md sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center flex-wrap gap-4">
+
+            <div class="flex items-center gap-3">
+                <div class="h-12 w-12 rounded-xl bg-[#0A5230] flex items-center justify-center border-2 border-[#D4AF37]">
+                    <!-- Landmark Icon -->
+                    <svg class="w-6 h-6 text-[#D4AF37]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path d="M3 21h18M5 21V10m4 11V10m6 11V10m4 11V10M2 10l10-6 10 6" />
+                    </svg>
+                </div>
+
+                <div>
+                    <h1 class="text-xl font-bold">Royal Recruitment</h1>
+                    <p class="text-xs font-bold text-[#0A5230] uppercase tracking-widest">Portal</p>
+                </div>
+            </div>
+
+            <div class="flex gap-3 text-xs">
+
+                <div class="flex items-center gap-2 bg-emerald-50 px-2 py-1 rounded-lg">
+                    <span class="font-bold text-[#0A5230]">Youth:</span>
+
+                    <button onclick="openAuth('candidate','login')" class="px-2 py-1 hover:text-emerald-800">
+                        Sign In
+                    </button>
+
+                    <button onclick="openAuth('candidate','register')" class="bg-[#0A5230] text-[#D4AF37] px-3 py-1 rounded-lg font-bold">
+                        Register
+                    </button>
+                </div>
+
             </div>
         </div>
-    </nav>
+    </header>
     <div class="container body-content">
         @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
+
     </div>
+    <!-- FOOTER -->
+    <footer class="bg-gray-900 text-[#F7F9F6] border-t border-gray-800 py-12">
+
+        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
+
+            <!-- LEFT SIDE -->
+            <div class="flex items-center gap-3">
+
+                <!-- ICON -->
+                <div class="h-10 w-10 rounded-lg bg-emerald-950 border border-[#D4AF37] flex items-center justify-center">
+                    <!-- Landmark SVG -->
+                    <svg class="h-5 w-5 text-[#D4AF37]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path d="M3 21h18M5 21V10m4 11V10m6 11V10m4 11V10M2 10l10-6 10 6" />
+                    </svg>
+                </div>
+
+                <!-- TEXT -->
+                <div>
+                    <p class="font-bold text-white tracking-wide">
+                        Royal Recruitment Portal
+                    </p>
+
+                    <p class="text-xs text-gray-400 font-mono">
+                        © 2026 Royal Recruitment Portal
+                    </p>
+
+                    <button onclick="openAuth('admin','login')"
+                            class="text-[10px] text-[#D4AF37] hover:underline block mt-1 font-mono uppercase font-bold tracking-wider">
+                        Traditional Council System Login →
+                    </button>
+                </div>
+
+            </div>
+
+            <!-- RIGHT SIDE -->
+            <div class="text-xs text-gray-400 text-center md:text-right max-w-md">
+                All registration and compliance records comply with the POPI Act of South Africa. Security keys managed server-side.
+            </div>
+
+        </div>
+
+    </footer>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")

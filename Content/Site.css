@@ -1,20 +1,208 @@
-﻿/* Set padding to keep content from hitting the edges */
-.body-content {
-    margin-top: 15px;
-    padding-left: 15px;
-    padding-right: 15px;
+﻿body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #F7F9F6;
 }
 
-/* Override the default bootstrap behavior where horizontal description lists 
-   will truncate terms that are too long to fit in the left column 
-*/
-.dl-horizontal dt {
-    white-space: normal;
+/* HEADER */
+.top-bar {
+    height: 6px;
+    background: linear-gradient(to right, #064e3b, #0A5230, #065f46);
 }
 
-/* Set width on the form input elements since they're 100% wide by default */
-input,
-select,
-textarea {
-    max-width: 280px;
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 40px;
+    background: rgba(255,255,255,0.95);
+    border-bottom: 1px solid #e5e7eb;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo-box {
+    width: 45px;
+    height: 45px;
+    background: #0A5230;
+    color: #D4AF37;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    font-size: 20px;
+}
+
+.title {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.subtitle {
+    font-size: 11px;
+    color: #0A5230;
+    letter-spacing: 2px;
+    font-weight: bold;
+}
+
+.btn {
+    padding: 8px 14px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.btn-primary {
+    background: #0A5230;
+    color: #D4AF37;
+}
+
+.btn-secondary {
+    background: white;
+    border: 1px solid #ccc;
+}
+
+/* HERO */
+.hero {
+    position: relative;
+    padding: 80px 40px;
+    color: white;
+    background: linear-gradient(to bottom, #121F18, #1a3324);
+    overflow: hidden;
+}
+
+.hero-content {
+    max-width: 700px;
+    position: relative;
+    z-index: 2;
+}
+
+.badge {
+    display: inline-block;
+    background: rgba(212,175,55,0.15);
+    border: 1px solid rgba(212,175,55,0.3);
+    color: #D4AF37;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    margin-bottom: 15px;
+}
+
+.hero h1 {
+    font-size: 42px;
+    margin-bottom: 15px;
+}
+
+.hero p {
+    color: #d1d5db;
+    line-height: 1.6;
+}
+
+.hero-actions {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.btn-gold {
+    background: #D4AF37;
+    color: #0A5230;
+}
+
+.btn-outline {
+    background: transparent;
+    border: 1px solid white;
+    color: white;
+}
+
+/* STATS */
+.stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    max-width: 900px;
+    margin: -40px auto 40px;
+    padding: 20px;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.stat {
+    text-align: center;
+}
+
+    .stat h2 {
+        margin: 0;
+        color: #0A5230;
+    }
+
+    .stat p {
+        font-size: 11px;
+        color: #666;
+    }
+
+/* INFO */
+.section {
+    padding: 60px 40px;
+    max-width: 1100px;
+    margin: auto;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+}
+
+    .card h3 {
+        margin-top: 10px;
+    }
+
+/* BANNER */
+.banner {
+    background: #0A5230;
+    color: white;
+    padding: 40px;
+    border-radius: 15px;
+    border: 2px solid #D4AF37;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+/* FOOTER */
+.footer {
+    background: #111827;
+    color: #ccc;
+    padding: 40px;
+    margin-top: 40px;
+}
+
+.footer-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.gold {
+    color: #D4AF37;
 }
