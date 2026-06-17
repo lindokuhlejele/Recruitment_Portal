@@ -1,0 +1,129 @@
+﻿
+
+
+@model List<Recruitment_Portal.Models.OpportunityListVM>
+@{
+    ViewBag.Title = "Index";
+}
+<div class="bg-gray-950 min-h-screen text-white p-8">
+
+    <h1 class="text-3xl font-bold mb-6">
+        Available Opportunities
+    </h1>
+
+    <!-- FILTERS -->
+
+    <form method="get">
+
+        <div class="grid md:grid-cols-4 gap-4 mb-6">
+
+            <input type="text"
+                   name="search"
+                   placeholder="Search jobs..."
+                   class="bg-gray-800 p-3 rounded-lg">
+
+            <select name="districtId"
+                    class="bg-gray-800 p-3 rounded-lg">
+
+                <option value="">
+                    All Districts
+                </option>
+
+                @foreach (var district in ViewBag.Districts)
+                {
+                    <option value="@district.id">
+                        @district.name
+                    </option>
+                }
+
+            </select>
+
+            <select name="categoryId"
+                    class="bg-gray-800 p-3 rounded-lg">
+
+                <option value="">
+                    All Categories
+                </option>
+
+                @foreach (var category in ViewBag.Categories)
+                {
+                    <option value="@category.id">
+                        @category.name
+                    </option>
+                }
+
+            </select>
+
+            <button type="submit"
+                    class="bg-[#D4AF37] text-black rounded-lg font-bold">
+                Search
+            </button>
+
+        </div>
+
+    </form>
+
+    <!-- JOBS -->
+
+    <div class="grid md:grid-cols-3 gap-6">
+
+        @foreach (var item in Model)
+        {
+            <div class="bg-gray-900 rounded-xl p-6 border border-gray-800">
+
+                <div class="flex justify-between mb-3">
+
+                    <h2 class="font-bold text-xl">
+                        @item.Title
+                    </h2>
+
+                    <span class="bg-green-700 px-2 py-1 rounded text-xs">
+                        @item.Status
+                    </span>
+
+                </div>
+
+                <div class="text-gray-400 mb-2">
+                    @item.CompanyName
+                </div>
+
+                <div class="text-sm text-gray-400">
+                    📍 @item.Location
+                </div>
+
+                <div class="text-sm text-gray-400">
+                    District: @item.District
+                </div>
+
+                <div class="mt-3">
+
+                    <span class="text-[#D4AF37] font-bold">
+                        R @item.Stipend
+                    </span>
+
+                </div>
+
+                <div class="mt-3 text-sm text-gray-400">
+                    Closing:
+                    @item.ClosingDate?.ToString("dd MMM yyyy")
+                </div>
+
+                <div class="mt-5">
+
+                    <a href="@Url.Action("Details","Opportunities",
+                        new { id = item.Id })"
+                       class="block text-center bg-[#D4AF37] text-black py-2 rounded-lg font-bold">
+
+                        View Opportunity
+
+                    </a>
+
+                </div>
+
+            </div>
+        }
+
+    </div>
+
+</div>
+

@@ -1,0 +1,319 @@
+﻿@{
+   
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="min-h-screen bg-gray-50 py-10">
+    <div class="max-w-5xl mx-auto bg-white shadow-xl rounded-xl p-8">
+
+        <!-- HEADER -->
+        <div class="text-center mb-8">
+            <h1 class="text-3xl font-bold">Youth Registration</h1>
+            <p class="text-gray-500">All fields marked * are required</p>
+        </div>
+
+        <!-- PROGRESS -->
+        <div class="mb-6">
+            <div class="w-full bg-gray-200 h-2 rounded">
+                <div id="progressBar" class="bg-blue-600 h-2 rounded" style="width:20%"></div>
+            </div>
+        </div>
+
+        <!-- STEP 1 -->
+        <div class="step" id="step1">
+            <h2 class="text-xl font-semibold mb-4">Account Information</h2>
+
+            <div class="grid md:grid-cols-2 gap-4">
+
+                <div>
+                    <label>Email *</label>
+                    <input id="email" type="email" class="input" />
+                </div>
+
+                <div>
+                    <label>Phone *</label>
+                    <input id="phone" type="text" class="input" />
+                </div>
+
+                <div class="md:col-span-2">
+                    <label>Password *</label>
+                    <input id="password" type="password" class="input" />
+                </div>
+
+            </div>
+        </div>
+
+        <!-- STEP 2 -->
+        <div class="step hidden" id="step2">
+            <h2 class="text-xl font-semibold mb-4">Personal Information</h2>
+
+            <div class="grid md:grid-cols-2 gap-4">
+
+                <input id="firstName" placeholder="First Name *" class="input" />
+                <input id="lastName" placeholder="Last Name *" class="input" />
+
+                <input id="dateOfBirth" type="date" class="input" />
+
+                <select id="gender" class="input">
+                    <option value="">Gender</option>
+                    <option>Male</option>
+                    <option>Female</option>
+                </select>
+
+                <input id="idNumber" placeholder="ID Number *" class="input" />
+
+                <input id="location" placeholder="Location *" class="input" />
+
+                <textarea id="address" class="input" placeholder="Address"></textarea>
+                <textarea id="bio" class="input" placeholder="Bio"></textarea>
+
+            </div>
+        </div>
+
+        <!-- STEP 3 -->
+        <div class="step hidden" id="step3">
+            <h2 class="text-xl font-semibold mb-4">Education (Optional)</h2>
+
+            <button type="button" onclick="addEducation()" class="bg-blue-600 text-white px-4 py-2 rounded">
+                + Add Education
+            </button>
+
+            <div id="educationContainer" class="mt-4"></div>
+        </div>
+
+        <!-- STEP 4 -->
+        <div class="step hidden" id="step4">
+
+            <h2 class="text-xl font-semibold mb-4">Skills</h2>
+
+            <p class="text-sm text-gray-500 mb-3">
+                Select at least 1 skill *
+            </p>
+
+            <div class="border rounded p-3 max-h-60 overflow-y-auto">
+
+                @foreach (var s in ViewBag.Skills)
+                {
+                    <label class="block">
+                        <input type="checkbox" class="skill" value="@s.id" />
+                        @s.name
+                    </label>
+                }
+
+            </div>
+        </div>
+
+        <!-- STEP 5 -->
+        <div class="step hidden" id="step5">
+            <h2 class="text-xl font-semibold mb-4">Review Details</h2>
+
+            <div id="reviewBox" class="bg-gray-100 p-4 rounded"></div>
+        </div>
+
+        <!-- NAVIGATION -->
+        <div class="flex justify-between mt-8">
+
+            <button id="prevBtn" type="button" onclick="prevStep()"
+                    class="hidden px-4 py-2 bg-gray-300 rounded">
+                Back
+            </button>
+
+            <button id="nextBtn" type="button" onclick="nextStep()"
+                    class="px-4 py-2 bg-blue-600 text-white rounded ml-auto">
+                Next
+            </button>
+
+            <button id="submitBtn" type="button" onclick="submitForm()"
+                    class="hidden px-4 py-2 bg-green-600 text-white rounded">
+                Submit
+            </button>
+
+        </div>
+
+    </div>
+</div>
+
+<style>
+    .input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        margin-bottom: 10px;
+    }
+</style>
+
+<script>
+
+    let step = 1;
+
+    function el(id) {
+        return document.getElementById(id);
+    }
+
+    function val(id) {
+        return (el(id)?.value || "").trim();
+    }
+
+    /* ---------------- STEPS ---------------- */
+    function showStep(s) {
+
+        step = Math.max(1, Math.min(5, s));
+
+        document.querySelectorAll('.step')
+            .forEach(x => x.classList.add('hidden'));
+
+        el('step' + step).classList.remove('hidden');
+
+        el('prevBtn').classList.toggle('hidden', step === 1);
+        el('nextBtn').classList.toggle('hidden', step === 5);
+        el('submitBtn').classList.toggle('hidden', step !== 5);
+
+        el('progressBar').style.width = (step * 20) + '%';
+    }
+
+    function nextStep() {
+
+        if (!validate(step)) return;
+
+        if (step === 4) buildReview();
+
+        if (step < 5) {
+            step++;
+            showStep(step);
+        }
+    }
+
+    function prevStep() {
+        if (step > 1) {
+            step--;
+            showStep(step);
+        }
+    }
+
+    /* ---------------- VALIDATION ---------------- */
+    function validate(step) {
+
+        if (step === 1) {
+
+            if (!val("email") || !val("phone") || !val("password") || val("password").length < 6) {
+                alert("Fill all account fields (password min 6 chars)");
+                return false;
+            }
+        }
+
+        if (step === 2) {
+
+            if (!val("firstName") || !val("lastName") || !val("idNumber") || !val("location")) {
+                alert("Fill all personal fields");
+                return false;
+            }
+        }
+
+        if (step === 4) {
+
+            if (document.querySelectorAll('.skill:checked').length === 0) {
+                alert("Select at least 1 skill");
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /* ---------------- EDUCATION ---------------- */
+    function addEducation() {
+
+        let html = `
+    <div class="border p-4 rounded mb-3 edu">
+
+        <input class="inst input" placeholder="Institution *" />
+        <input class="qual input" placeholder="Qualification" />
+        <input class="field input" placeholder="Field Of Study" />
+        <input class="level input" placeholder="Level" />
+        <input type="date" class="start input" />
+        <input type="date" class="end input" />
+
+    </div>`;
+
+        el("educationContainer").insertAdjacentHTML("beforeend", html);
+    }
+
+    /* ---------------- REVIEW ---------------- */
+    function buildReview() {
+
+        let skillCount = document.querySelectorAll('.skill:checked').length;
+
+        el("reviewBox").innerHTML = `
+        <p><b>Name:</b> ${val("firstName")} ${val("lastName")}</p>
+        <p><b>Email:</b> ${val("email")}</p>
+        <p><b>ID:</b> ${val("idNumber")}</p>
+        <p><b>Location:</b> ${val("location")}</p>
+        <p><b>Skills:</b> ${skillCount}</p>
+    `;
+    }
+
+    /* ---------------- SUBMIT ---------------- */
+    function submitForm() {
+
+        let skills = [];
+        document.querySelectorAll('.skill:checked')
+            .forEach(x => skills.push(x.value));
+
+        let education = [];
+
+        document.querySelectorAll('.edu').forEach(e => {
+            education.push({
+                InstitutionName: e.querySelector('.inst')?.value,
+                Qualification: e.querySelector('.qual')?.value,
+                FieldOfStudy: e.querySelector('.field')?.value,
+                Level: e.querySelector('.level')?.value,
+                StartDate: e.querySelector('.start')?.value,
+                EndDate: e.querySelector('.end')?.value,
+                Completed: true
+            });
+        });
+
+        let model = {
+            Email: val("email"),
+            Phone: val("phone"),
+            Password: val("password"),
+
+            FirstName: val("firstName"),
+            LastName: val("lastName"),
+            DateOfBirth: val("dateOfBirth"),
+            Gender: val("gender"),
+            IdNumber: val("idNumber"),
+
+            Location: val("location"),
+
+            Address: val("address"),
+            Bio: val("bio"),
+
+            Skills: skills,
+            Education: education
+        };
+
+        $.ajax({
+            url: '/Account/Register',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(model),
+            success: function (res) {
+                if (res.success) {
+                    alert("Registration successful");
+                    window.location.href = "/Account/Login";
+                } else {
+                    alert(res.message);
+                }
+            },
+            error: function () {
+                alert("Something went wrong");
+            }
+        });
+    }
+
+    /* INIT */
+    showStep(1);
+
+</script>

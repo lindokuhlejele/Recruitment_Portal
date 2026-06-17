@@ -1,0 +1,97 @@
+﻿
+@{
+    ViewBag.Title = "Applicants";
+}
+
+@model List<Recruitment_Portal.Models.ApplicantVM>
+
+<div class="min-h-screen bg-gray-950 text-white p-8">
+
+    <h1 class="text-3xl font-bold mb-6">
+        Applicants
+    </h1>
+
+    <div class="grid md:grid-cols-2 gap-6">
+
+        @foreach (var a in Model)
+        {
+            <div class="bg-gray-900 border border-gray-800 rounded-xl p-6">
+
+                <!-- NAME -->
+                <h2 class="text-xl font-bold">
+                    @a.FullName
+                </h2>
+
+                <div class="text-gray-400 text-sm mt-1">
+                    @a.Email
+                </div>
+
+                <div class="text-gray-400 text-sm">
+                    @a.Phone
+                </div>
+
+                <!-- STATUS -->
+                <div class="mt-3">
+                    <span class="px-3 py-1 rounded-full text-xs
+                        @(a.Status == "Applied" ? "bg-blue-600" :
+                          a.Status == "Shortlisted" ? "bg-yellow-600" :
+                          a.Status == "Rejected" ? "bg-red-600" :
+                          "bg-green-600")">
+
+                        @a.Status
+                    </span>
+                </div>
+
+                <!-- PROFILE COMPLETION -->
+                <div class="mt-3 text-sm text-gray-400">
+                    Profile Completion: @a.ProfileCompletion%
+                </div>
+
+                <!-- ACTIONS -->
+                <div class="mt-5 flex gap-3">
+
+                    @if (!string.IsNullOrEmpty(a.CvUrl))
+                    {
+                        <a href="@a.CvUrl"
+                           target="_blank"
+                           class="bg-[#D4AF37] text-black px-4 py-2 rounded-lg font-bold">
+                            View CV
+                        </a>
+                    }
+
+                    <button onclick="updateStatus('@a.ApplicationId','Shortlisted')"
+                            class="bg-green-600 px-4 py-2 rounded-lg">
+                        Shortlist
+                    </button>
+
+                    <button onclick="updateStatus('@a.ApplicationId','Rejected')"
+                            class="bg-red-600 px-4 py-2 rounded-lg">
+                        Reject
+                    </button>
+
+                </div>
+
+            </div>
+        }
+
+    </div>
+
+</div>
+
+<script>
+    function updateStatus(applicationId, status) {
+        $.ajax({
+            url: '/Company/UpdateApplicationStatus',
+            type: 'POST',
+            data: {
+                applicationId: applicationId,
+                status: status
+            },
+            success: function (res) {
+                alert(res.message);
+                location.reload();
+            }
+        });
+    }
+</script>
+

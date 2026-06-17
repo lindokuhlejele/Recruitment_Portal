@@ -1,0 +1,2142 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="RoyalPortalDbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="analytics_events">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="user_id" Type="uniqueidentifier" />
+          <Property Name="event_type" Type="nvarchar" MaxLength="100" />
+          <Property Name="metadata" Type="nvarchar(max)" />
+          <Property Name="created_at" Type="datetime2" Precision="7" />
+        </EntityType>
+        <EntityType Name="applications">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="user_id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="opportunity_id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="status" Type="nvarchar" MaxLength="50" />
+          <Property Name="applied_at" Type="datetime2" Precision="7" />
+          <Property Name="updated_at" Type="datetime2" Precision="7" />
+        </EntityType>
+        <EntityType Name="audit_logs">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="user_id" Type="uniqueidentifier" />
+          <Property Name="action" Type="nvarchar(max)" />
+          <Property Name="table_name" Type="nvarchar" MaxLength="100" />
+          <Property Name="record_id" Type="uniqueidentifier" />
+          <Property Name="created_at" Type="datetime2" Precision="7" />
+        </EntityType>
+        <EntityType Name="bursaries">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="title" Type="nvarchar" MaxLength="255" />
+          <Property Name="sponsor" Type="nvarchar" MaxLength="255" />
+          <Property Name="amount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="requirements" Type="nvarchar(max)" />
+          <Property Name="closing_date" Type="date" />
+        </EntityType>
+        <EntityType Name="companies">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="company_name" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="registration_number" Type="nvarchar" MaxLength="100" />
+          <Property Name="industry" Type="nvarchar" MaxLength="100" />
+          <Property Name="district_id" Type="uniqueidentifier" />
+          <Property Name="verified" Type="bit" />
+          <Property Name="created_at" Type="datetime2" Precision="7" />
+          <Property Name="website" Type="nvarchar" MaxLength="255" />
+          <Property Name="email" Type="nvarchar" MaxLength="255" />
+          <Property Name="phone" Type="nvarchar" MaxLength="50" />
+          <Property Name="logo_url" Type="nvarchar(max)" />
+          <Property Name="description" Type="nvarchar(max)" />
+          <Property Name="physical_address" Type="nvarchar(max)" />
+          <Property Name="ContactPerson" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="company_users">
+          <Key>
+            <PropertyRef Name="company_id" />
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="company_id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="user_id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="role" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="courses">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="title" Type="nvarchar" MaxLength="255" />
+          <Property Name="provider" Type="nvarchar" MaxLength="255" />
+          <Property Name="description" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="districts">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="documents">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="user_id" Type="uniqueidentifier" />
+          <Property Name="document_type" Type="nvarchar" MaxLength="50" />
+          <Property Name="file_url" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="is_verified" Type="bit" />
+          <Property Name="uploaded_at" Type="datetime2" Precision="7" />
+        </EntityType>
+        <EntityType Name="education">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="user_id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="institution_name" Type="nvarchar" MaxLength="255" />
+          <Property Name="qualification" Type="nvarchar" MaxLength="255" />
+          <Property Name="field_of_study" Type="nvarchar" MaxLength="255" />
+          <Property Name="level" Type="nvarchar" MaxLength="100" />
+          <Property Name="start_date" Type="date" />
+          <Property Name="end_date" Type="date" />
+          <Property Name="completed" Type="bit" />
+        </EntityType>
+        <EntityType Name="event_registrations">
+          <Key>
+            <PropertyRef Name="event_id" />
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="event_id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="user_id" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="events">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="title" Type="nvarchar" MaxLength="255" />
+          <Property Name="description" Type="nvarchar(max)" />
+          <Property Name="event_date" Type="datetime2" Precision="7" />
+          <Property Name="location" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="generated_cvs">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="user_id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="file_url" Type="nvarchar(max)" />
+          <Property Name="generated_at" Type="datetime2" Precision="7" />
+        </EntityType>
+        <EntityType Name="interests">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="interviews">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="application_id" Type="uniqueidentifier" />
+          <Property Name="interview_date" Type="datetime2" Precision="7" />
+          <Property Name="interview_mode" Type="nvarchar" MaxLength="50" />
+          <Property Name="notes" Type="nvarchar(max)" />
+          <Property Name="status" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="opportunities">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="company_id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="category_id" Type="uniqueidentifier" />
+          <Property Name="title" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="description" Type="nvarchar(max)" />
+          <Property Name="location" Type="nvarchar" MaxLength="255" />
+          <Property Name="district_id" Type="uniqueidentifier" />
+          <Property Name="requirements" Type="nvarchar(max)" />
+          <Property Name="stipend" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="closing_date" Type="date" />
+          <Property Name="status" Type="nvarchar" MaxLength="50" />
+          <Property Name="created_at" Type="datetime2" Precision="7" />
+        </EntityType>
+        <EntityType Name="opportunity_categories">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="opportunity_documents">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="opportunity_id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="file_url" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="opportunity_skills">
+          <Key>
+            <PropertyRef Name="opportunity_id" />
+            <PropertyRef Name="skill_id" />
+          </Key>
+          <Property Name="opportunity_id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="skill_id" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="partners">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="255" />
+          <Property Name="type" Type="nvarchar" MaxLength="100" />
+          <Property Name="contact_info" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="password_resets">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="user_id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="reset_token" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="expires_at" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="used" Type="bit" />
+        </EntityType>
+        <EntityType Name="skills">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="user_courses">
+          <Key>
+            <PropertyRef Name="user_id" />
+            <PropertyRef Name="course_id" />
+          </Key>
+          <Property Name="user_id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="course_id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="status" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="user_interests">
+          <Key>
+            <PropertyRef Name="user_id" />
+            <PropertyRef Name="interest_id" />
+          </Key>
+          <Property Name="user_id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="interest_id" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="user_sessions">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="user_id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="refresh_token" Type="nvarchar(max)" />
+          <Property Name="expires_at" Type="datetime2" Precision="7" />
+          <Property Name="created_at" Type="datetime2" Precision="7" />
+        </EntityType>
+        <EntityType Name="user_skills">
+          <Key>
+            <PropertyRef Name="user_id" />
+            <PropertyRef Name="skill_id" />
+          </Key>
+          <Property Name="user_id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="skill_id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="proficiency_level" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="users">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="email" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="phone" Type="nvarchar" MaxLength="20" />
+          <Property Name="password_hash" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="role" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="is_verified" Type="bit" />
+          <Property Name="is_active" Type="bit" />
+          <Property Name="created_at" Type="datetime2" Precision="7" />
+          <Property Name="updated_at" Type="datetime2" Precision="7" />
+          <Property Name="deleted_at" Type="datetime2" Precision="7" />
+        </EntityType>
+        <EntityType Name="verifications">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="user_id" Type="uniqueidentifier" />
+          <Property Name="verification_type" Type="nvarchar" MaxLength="100" />
+          <Property Name="status" Type="nvarchar" MaxLength="50" />
+          <Property Name="verified_by" Type="uniqueidentifier" />
+          <Property Name="verified_at" Type="datetime2" Precision="7" />
+        </EntityType>
+        <EntityType Name="work_experience">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="user_id" Type="uniqueidentifier" />
+          <Property Name="company_name" Type="nvarchar" MaxLength="255" />
+          <Property Name="position" Type="nvarchar" MaxLength="255" />
+          <Property Name="start_date" Type="date" />
+          <Property Name="end_date" Type="date" />
+          <Property Name="description" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="youth_profiles">
+          <Key>
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="user_id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="first_name" Type="nvarchar" MaxLength="100" />
+          <Property Name="last_name" Type="nvarchar" MaxLength="100" />
+          <Property Name="date_of_birth" Type="date" />
+          <Property Name="gender" Type="nvarchar" MaxLength="20" />
+          <Property Name="id_number" Type="nvarchar" MaxLength="20" />
+          <Property Name="address" Type="nvarchar(max)" />
+          <Property Name="availability_status" Type="nvarchar" MaxLength="50" />
+          <Property Name="drivers_license" Type="nvarchar" MaxLength="50" />
+          <Property Name="profile_photo_url" Type="nvarchar(max)" />
+          <Property Name="bio" Type="nvarchar(max)" />
+          <Property Name="profile_completion" Type="int" />
+          <Property Name="created_at" Type="datetime2" Precision="7" />
+          <Property Name="location" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <Association Name="FK__analytics__user___37703C52">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="analytics_events" Type="Self.analytics_events" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="analytics_events">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__applicati__oppor__19DFD96B">
+          <End Role="opportunities" Type="Self.opportunities" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="applications" Type="Self.applications" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="opportunities">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="applications">
+              <PropertyRef Name="opportunity_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__applicati__user___18EBB532">
+          <End Role="users" Type="Self.users" Multiplicity="1" />
+          <End Role="applications" Type="Self.applications" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="applications">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__audit_log__user___3C34F16F">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="audit_logs" Type="Self.audit_logs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="audit_logs">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__companies__distr__7E37BEF6">
+          <End Role="districts" Type="Self.districts" Multiplicity="0..1" />
+          <End Role="companies" Type="Self.companies" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="districts">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="companies">
+              <PropertyRef Name="district_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__company_u__compa__01142BA1">
+          <End Role="companies" Type="Self.companies" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="company_users" Type="Self.company_users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="companies">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="company_users">
+              <PropertyRef Name="company_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__company_u__user___02084FDA">
+          <End Role="users" Type="Self.users" Multiplicity="1" />
+          <End Role="company_users" Type="Self.company_users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="company_users">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__documents__user___73BA3083">
+          <End Role="users" Type="Self.users" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="documents" Type="Self.documents" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="documents">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__education__user___628FA481">
+          <End Role="users" Type="Self.users" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="education" Type="Self.education" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="education">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__event_reg__event__2A164134">
+          <End Role="events" Type="Self.events" Multiplicity="1" />
+          <End Role="event_registrations" Type="Self.event_registrations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="events">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="event_registrations">
+              <PropertyRef Name="event_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__event_reg__user___2B0A656D">
+          <End Role="users" Type="Self.users" Multiplicity="1" />
+          <End Role="event_registrations" Type="Self.event_registrations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="event_registrations">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__generated__user___787EE5A0">
+          <End Role="users" Type="Self.users" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="generated_cvs" Type="Self.generated_cvs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="generated_cvs">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__interview__appli__1DB06A4F">
+          <End Role="applications" Type="Self.applications" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="interviews" Type="Self.interviews" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="applications">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="interviews">
+              <PropertyRef Name="application_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__opportuni__categ__08B54D69">
+          <End Role="opportunity_categories" Type="Self.opportunity_categories" Multiplicity="0..1" />
+          <End Role="opportunities" Type="Self.opportunities" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="opportunity_categories">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="opportunities">
+              <PropertyRef Name="category_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__opportuni__compa__07C12930">
+          <End Role="companies" Type="Self.companies" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="opportunities" Type="Self.opportunities" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="companies">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="opportunities">
+              <PropertyRef Name="company_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__opportuni__distr__09A971A2">
+          <End Role="districts" Type="Self.districts" Multiplicity="0..1" />
+          <End Role="opportunities" Type="Self.opportunities" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="districts">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="opportunities">
+              <PropertyRef Name="district_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__opportuni__oppor__0C85DE4D">
+          <End Role="opportunities" Type="Self.opportunities" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="opportunity_skills" Type="Self.opportunity_skills" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="opportunities">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="opportunity_skills">
+              <PropertyRef Name="opportunity_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__opportuni__oppor__114A936A">
+          <End Role="opportunities" Type="Self.opportunities" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="opportunity_documents" Type="Self.opportunity_documents" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="opportunities">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="opportunity_documents">
+              <PropertyRef Name="opportunity_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__opportuni__skill__0D7A0286">
+          <End Role="skills" Type="Self.skills" Multiplicity="1" />
+          <End Role="opportunity_skills" Type="Self.opportunity_skills" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="skills">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="opportunity_skills">
+              <PropertyRef Name="skill_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__password___user___4316F928">
+          <End Role="users" Type="Self.users" Multiplicity="1" />
+          <End Role="password_resets" Type="Self.password_resets" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="password_resets">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__user_cour__cours__245D67DE">
+          <End Role="courses" Type="Self.courses" Multiplicity="1" />
+          <End Role="user_courses" Type="Self.user_courses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="courses">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="user_courses">
+              <PropertyRef Name="course_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__user_cour__user___236943A5">
+          <End Role="users" Type="Self.users" Multiplicity="1" />
+          <End Role="user_courses" Type="Self.user_courses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="user_courses">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__user_inte__inter__6E01572D">
+          <End Role="interests" Type="Self.interests" Multiplicity="1" />
+          <End Role="user_interests" Type="Self.user_interests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="interests">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="user_interests">
+              <PropertyRef Name="interest_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__user_inte__user___6D0D32F4">
+          <End Role="users" Type="Self.users" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="user_interests" Type="Self.user_interests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="user_interests">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__user_sess__user___47DBAE45">
+          <End Role="users" Type="Self.users" Multiplicity="1" />
+          <End Role="user_sessions" Type="Self.user_sessions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="user_sessions">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__user_skil__skill__6A30C649">
+          <End Role="skills" Type="Self.skills" Multiplicity="1" />
+          <End Role="user_skills" Type="Self.user_skills" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="skills">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="user_skills">
+              <PropertyRef Name="skill_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__user_skil__user___693CA210">
+          <End Role="users" Type="Self.users" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="user_skills" Type="Self.user_skills" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="user_skills">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__verificat__user___31B762FC">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="verifications" Type="Self.verifications" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="verifications">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__verificat__verif__32AB8735">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="verifications" Type="Self.verifications" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="verifications">
+              <PropertyRef Name="verified_by" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__work_expe__user___66603565">
+          <End Role="users" Type="Self.users" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="work_experience" Type="Self.work_experience" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="work_experience">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__youth_pro__user___5CD6CB2B">
+          <End Role="users" Type="Self.users" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="youth_profiles" Type="Self.youth_profiles" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="youth_profiles">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_education_user">
+          <End Role="youth_profiles" Type="Self.youth_profiles" Multiplicity="1" />
+          <End Role="education" Type="Self.education" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="youth_profiles">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="education">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_work_user">
+          <End Role="youth_profiles" Type="Self.youth_profiles" Multiplicity="0..1" />
+          <End Role="work_experience" Type="Self.work_experience" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="youth_profiles">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="work_experience">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="RoyalPortalDbModelStoreContainer">
+          <EntitySet Name="analytics_events" EntityType="Self.analytics_events" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="applications" EntityType="Self.applications" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="audit_logs" EntityType="Self.audit_logs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="bursaries" EntityType="Self.bursaries" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="companies" EntityType="Self.companies" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="company_users" EntityType="Self.company_users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="courses" EntityType="Self.courses" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="districts" EntityType="Self.districts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="documents" EntityType="Self.documents" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="education" EntityType="Self.education" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="event_registrations" EntityType="Self.event_registrations" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="events" EntityType="Self.events" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="generated_cvs" EntityType="Self.generated_cvs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="interests" EntityType="Self.interests" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="interviews" EntityType="Self.interviews" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="opportunities" EntityType="Self.opportunities" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="opportunity_categories" EntityType="Self.opportunity_categories" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="opportunity_documents" EntityType="Self.opportunity_documents" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="opportunity_skills" EntityType="Self.opportunity_skills" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="partners" EntityType="Self.partners" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="password_resets" EntityType="Self.password_resets" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="skills" EntityType="Self.skills" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="user_courses" EntityType="Self.user_courses" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="user_interests" EntityType="Self.user_interests" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="user_sessions" EntityType="Self.user_sessions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="user_skills" EntityType="Self.user_skills" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="verifications" EntityType="Self.verifications" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="work_experience" EntityType="Self.work_experience" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="youth_profiles" EntityType="Self.youth_profiles" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__analytics__user___37703C52" Association="Self.FK__analytics__user___37703C52">
+            <End Role="users" EntitySet="users" />
+            <End Role="analytics_events" EntitySet="analytics_events" />
+          </AssociationSet>
+          <AssociationSet Name="FK__applicati__oppor__19DFD96B" Association="Self.FK__applicati__oppor__19DFD96B">
+            <End Role="opportunities" EntitySet="opportunities" />
+            <End Role="applications" EntitySet="applications" />
+          </AssociationSet>
+          <AssociationSet Name="FK__applicati__user___18EBB532" Association="Self.FK__applicati__user___18EBB532">
+            <End Role="users" EntitySet="users" />
+            <End Role="applications" EntitySet="applications" />
+          </AssociationSet>
+          <AssociationSet Name="FK__audit_log__user___3C34F16F" Association="Self.FK__audit_log__user___3C34F16F">
+            <End Role="users" EntitySet="users" />
+            <End Role="audit_logs" EntitySet="audit_logs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__companies__distr__7E37BEF6" Association="Self.FK__companies__distr__7E37BEF6">
+            <End Role="districts" EntitySet="districts" />
+            <End Role="companies" EntitySet="companies" />
+          </AssociationSet>
+          <AssociationSet Name="FK__company_u__compa__01142BA1" Association="Self.FK__company_u__compa__01142BA1">
+            <End Role="companies" EntitySet="companies" />
+            <End Role="company_users" EntitySet="company_users" />
+          </AssociationSet>
+          <AssociationSet Name="FK__company_u__user___02084FDA" Association="Self.FK__company_u__user___02084FDA">
+            <End Role="users" EntitySet="users" />
+            <End Role="company_users" EntitySet="company_users" />
+          </AssociationSet>
+          <AssociationSet Name="FK__documents__user___73BA3083" Association="Self.FK__documents__user___73BA3083">
+            <End Role="users" EntitySet="users" />
+            <End Role="documents" EntitySet="documents" />
+          </AssociationSet>
+          <AssociationSet Name="FK__education__user___628FA481" Association="Self.FK__education__user___628FA481">
+            <End Role="users" EntitySet="users" />
+            <End Role="education" EntitySet="education" />
+          </AssociationSet>
+          <AssociationSet Name="FK__event_reg__event__2A164134" Association="Self.FK__event_reg__event__2A164134">
+            <End Role="events" EntitySet="events" />
+            <End Role="event_registrations" EntitySet="event_registrations" />
+          </AssociationSet>
+          <AssociationSet Name="FK__event_reg__user___2B0A656D" Association="Self.FK__event_reg__user___2B0A656D">
+            <End Role="users" EntitySet="users" />
+            <End Role="event_registrations" EntitySet="event_registrations" />
+          </AssociationSet>
+          <AssociationSet Name="FK__generated__user___787EE5A0" Association="Self.FK__generated__user___787EE5A0">
+            <End Role="users" EntitySet="users" />
+            <End Role="generated_cvs" EntitySet="generated_cvs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__interview__appli__1DB06A4F" Association="Self.FK__interview__appli__1DB06A4F">
+            <End Role="applications" EntitySet="applications" />
+            <End Role="interviews" EntitySet="interviews" />
+          </AssociationSet>
+          <AssociationSet Name="FK__opportuni__categ__08B54D69" Association="Self.FK__opportuni__categ__08B54D69">
+            <End Role="opportunity_categories" EntitySet="opportunity_categories" />
+            <End Role="opportunities" EntitySet="opportunities" />
+          </AssociationSet>
+          <AssociationSet Name="FK__opportuni__compa__07C12930" Association="Self.FK__opportuni__compa__07C12930">
+            <End Role="companies" EntitySet="companies" />
+            <End Role="opportunities" EntitySet="opportunities" />
+          </AssociationSet>
+          <AssociationSet Name="FK__opportuni__distr__09A971A2" Association="Self.FK__opportuni__distr__09A971A2">
+            <End Role="districts" EntitySet="districts" />
+            <End Role="opportunities" EntitySet="opportunities" />
+          </AssociationSet>
+          <AssociationSet Name="FK__opportuni__oppor__0C85DE4D" Association="Self.FK__opportuni__oppor__0C85DE4D">
+            <End Role="opportunities" EntitySet="opportunities" />
+            <End Role="opportunity_skills" EntitySet="opportunity_skills" />
+          </AssociationSet>
+          <AssociationSet Name="FK__opportuni__oppor__114A936A" Association="Self.FK__opportuni__oppor__114A936A">
+            <End Role="opportunities" EntitySet="opportunities" />
+            <End Role="opportunity_documents" EntitySet="opportunity_documents" />
+          </AssociationSet>
+          <AssociationSet Name="FK__opportuni__skill__0D7A0286" Association="Self.FK__opportuni__skill__0D7A0286">
+            <End Role="skills" EntitySet="skills" />
+            <End Role="opportunity_skills" EntitySet="opportunity_skills" />
+          </AssociationSet>
+          <AssociationSet Name="FK__password___user___4316F928" Association="Self.FK__password___user___4316F928">
+            <End Role="users" EntitySet="users" />
+            <End Role="password_resets" EntitySet="password_resets" />
+          </AssociationSet>
+          <AssociationSet Name="FK__user_cour__cours__245D67DE" Association="Self.FK__user_cour__cours__245D67DE">
+            <End Role="courses" EntitySet="courses" />
+            <End Role="user_courses" EntitySet="user_courses" />
+          </AssociationSet>
+          <AssociationSet Name="FK__user_cour__user___236943A5" Association="Self.FK__user_cour__user___236943A5">
+            <End Role="users" EntitySet="users" />
+            <End Role="user_courses" EntitySet="user_courses" />
+          </AssociationSet>
+          <AssociationSet Name="FK__user_inte__inter__6E01572D" Association="Self.FK__user_inte__inter__6E01572D">
+            <End Role="interests" EntitySet="interests" />
+            <End Role="user_interests" EntitySet="user_interests" />
+          </AssociationSet>
+          <AssociationSet Name="FK__user_inte__user___6D0D32F4" Association="Self.FK__user_inte__user___6D0D32F4">
+            <End Role="users" EntitySet="users" />
+            <End Role="user_interests" EntitySet="user_interests" />
+          </AssociationSet>
+          <AssociationSet Name="FK__user_sess__user___47DBAE45" Association="Self.FK__user_sess__user___47DBAE45">
+            <End Role="users" EntitySet="users" />
+            <End Role="user_sessions" EntitySet="user_sessions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__user_skil__skill__6A30C649" Association="Self.FK__user_skil__skill__6A30C649">
+            <End Role="skills" EntitySet="skills" />
+            <End Role="user_skills" EntitySet="user_skills" />
+          </AssociationSet>
+          <AssociationSet Name="FK__user_skil__user___693CA210" Association="Self.FK__user_skil__user___693CA210">
+            <End Role="users" EntitySet="users" />
+            <End Role="user_skills" EntitySet="user_skills" />
+          </AssociationSet>
+          <AssociationSet Name="FK__verificat__user___31B762FC" Association="Self.FK__verificat__user___31B762FC">
+            <End Role="users" EntitySet="users" />
+            <End Role="verifications" EntitySet="verifications" />
+          </AssociationSet>
+          <AssociationSet Name="FK__verificat__verif__32AB8735" Association="Self.FK__verificat__verif__32AB8735">
+            <End Role="users" EntitySet="users" />
+            <End Role="verifications" EntitySet="verifications" />
+          </AssociationSet>
+          <AssociationSet Name="FK__work_expe__user___66603565" Association="Self.FK__work_expe__user___66603565">
+            <End Role="users" EntitySet="users" />
+            <End Role="work_experience" EntitySet="work_experience" />
+          </AssociationSet>
+          <AssociationSet Name="FK__youth_pro__user___5CD6CB2B" Association="Self.FK__youth_pro__user___5CD6CB2B">
+            <End Role="users" EntitySet="users" />
+            <End Role="youth_profiles" EntitySet="youth_profiles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_education_user" Association="Self.FK_education_user">
+            <End Role="youth_profiles" EntitySet="youth_profiles" />
+            <End Role="education" EntitySet="education" />
+          </AssociationSet>
+          <AssociationSet Name="FK_work_user" Association="Self.FK_work_user">
+            <End Role="youth_profiles" EntitySet="youth_profiles" />
+            <End Role="work_experience" EntitySet="work_experience" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="RoyalPortalDbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="analytics_events">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="user_id" Type="Guid" />
+          <Property Name="event_type" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="metadata" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="created_at" Type="DateTime" Precision="7" />
+          <NavigationProperty Name="user" Relationship="Self.FK__analytics__user___37703C52" FromRole="analytics_events" ToRole="users" />
+        </EntityType>
+        <EntityType Name="application">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="user_id" Type="Guid" Nullable="false" />
+          <Property Name="opportunity_id" Type="Guid" Nullable="false" />
+          <Property Name="status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="applied_at" Type="DateTime" Precision="7" />
+          <Property Name="updated_at" Type="DateTime" Precision="7" />
+          <NavigationProperty Name="opportunity" Relationship="Self.FK__applicati__oppor__19DFD96B" FromRole="applications" ToRole="opportunities" />
+          <NavigationProperty Name="user" Relationship="Self.FK__applicati__user___18EBB532" FromRole="applications" ToRole="users" />
+          <NavigationProperty Name="interviews" Relationship="Self.FK__interview__appli__1DB06A4F" FromRole="applications" ToRole="interviews" />
+        </EntityType>
+        <EntityType Name="audit_logs">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="user_id" Type="Guid" />
+          <Property Name="action" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="table_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="record_id" Type="Guid" />
+          <Property Name="created_at" Type="DateTime" Precision="7" />
+          <NavigationProperty Name="user" Relationship="Self.FK__audit_log__user___3C34F16F" FromRole="audit_logs" ToRole="users" />
+        </EntityType>
+        <EntityType Name="bursary">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="title" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="sponsor" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="amount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="requirements" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="closing_date" Type="DateTime" Precision="0" />
+        </EntityType>
+        <EntityType Name="company">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="company_name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="registration_number" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="industry" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="district_id" Type="Guid" />
+          <Property Name="verified" Type="Boolean" />
+          <Property Name="created_at" Type="DateTime" Precision="7" />
+          <NavigationProperty Name="district" Relationship="Self.FK__companies__distr__7E37BEF6" FromRole="companies" ToRole="districts" />
+          <NavigationProperty Name="company_users" Relationship="Self.FK__company_u__compa__01142BA1" FromRole="companies" ToRole="company_users" />
+          <NavigationProperty Name="opportunities" Relationship="Self.FK__opportuni__compa__07C12930" FromRole="companies" ToRole="opportunities" />
+          <Property Name="website" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="email" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="logo_url" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="physical_address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ContactPerson" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="company_users">
+          <Key>
+            <PropertyRef Name="company_id" />
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="company_id" Type="Guid" Nullable="false" />
+          <Property Name="user_id" Type="Guid" Nullable="false" />
+          <Property Name="role" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="company" Relationship="Self.FK__company_u__compa__01142BA1" FromRole="company_users" ToRole="companies" />
+          <NavigationProperty Name="user" Relationship="Self.FK__company_u__user___02084FDA" FromRole="company_users" ToRole="users" />
+        </EntityType>
+        <EntityType Name="cours">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="title" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="provider" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="user_courses" Relationship="Self.FK__user_cour__cours__245D67DE" FromRole="courses" ToRole="user_courses" />
+        </EntityType>
+        <EntityType Name="district">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="companies" Relationship="Self.FK__companies__distr__7E37BEF6" FromRole="districts" ToRole="companies" />
+          <NavigationProperty Name="opportunities" Relationship="Self.FK__opportuni__distr__09A971A2" FromRole="districts" ToRole="opportunities" />
+        </EntityType>
+        <EntityType Name="document">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="user_id" Type="Guid" />
+          <Property Name="document_type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="file_url" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="is_verified" Type="Boolean" />
+          <Property Name="uploaded_at" Type="DateTime" Precision="7" />
+          <NavigationProperty Name="user" Relationship="Self.FK__documents__user___73BA3083" FromRole="documents" ToRole="users" />
+        </EntityType>
+        <EntityType Name="education">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="user_id" Type="Guid" Nullable="false" />
+          <Property Name="institution_name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="qualification" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="field_of_study" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="level" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="start_date" Type="DateTime" Precision="0" />
+          <Property Name="end_date" Type="DateTime" Precision="0" />
+          <Property Name="completed" Type="Boolean" />
+          <NavigationProperty Name="user" Relationship="Self.FK__education__user___628FA481" FromRole="education" ToRole="users" />
+          <NavigationProperty Name="youth_profiles" Relationship="Self.FK_education_user" FromRole="education" ToRole="youth_profiles" />
+        </EntityType>
+        <EntityType Name="event">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="title" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="event_date" Type="DateTime" Precision="7" />
+          <Property Name="location" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="users" Relationship="Self.event_registrations" FromRole="events" ToRole="users" />
+        </EntityType>
+        <EntityType Name="generated_cvs">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="user_id" Type="Guid" Nullable="false" />
+          <Property Name="file_url" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="generated_at" Type="DateTime" Precision="7" />
+          <NavigationProperty Name="user" Relationship="Self.FK__generated__user___787EE5A0" FromRole="generated_cvs" ToRole="users" />
+        </EntityType>
+        <EntityType Name="interest">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="users" Relationship="Self.user_interests" FromRole="interests" ToRole="users" />
+        </EntityType>
+        <EntityType Name="interview">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="application_id" Type="Guid" />
+          <Property Name="interview_date" Type="DateTime" Precision="7" />
+          <Property Name="interview_mode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="application" Relationship="Self.FK__interview__appli__1DB06A4F" FromRole="interviews" ToRole="applications" />
+        </EntityType>
+        <EntityType Name="opportunity">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="company_id" Type="Guid" Nullable="false" />
+          <Property Name="category_id" Type="Guid" />
+          <Property Name="title" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="location" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="district_id" Type="Guid" />
+          <Property Name="requirements" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="stipend" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="closing_date" Type="DateTime" Precision="0" />
+          <Property Name="status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="created_at" Type="DateTime" Precision="7" />
+          <NavigationProperty Name="applications" Relationship="Self.FK__applicati__oppor__19DFD96B" FromRole="opportunities" ToRole="applications" />
+          <NavigationProperty Name="company" Relationship="Self.FK__opportuni__compa__07C12930" FromRole="opportunities" ToRole="companies" />
+          <NavigationProperty Name="district" Relationship="Self.FK__opportuni__distr__09A971A2" FromRole="opportunities" ToRole="districts" />
+          <NavigationProperty Name="opportunity_categories" Relationship="Self.FK__opportuni__categ__08B54D69" FromRole="opportunities" ToRole="opportunity_categories" />
+          <NavigationProperty Name="opportunity_documents" Relationship="Self.FK__opportuni__oppor__114A936A" FromRole="opportunities" ToRole="opportunity_documents" />
+          <NavigationProperty Name="skills" Relationship="Self.opportunity_skills" FromRole="opportunities" ToRole="skills" />
+        </EntityType>
+        <EntityType Name="opportunity_categories">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="opportunities" Relationship="Self.FK__opportuni__categ__08B54D69" FromRole="opportunity_categories" ToRole="opportunities" />
+        </EntityType>
+        <EntityType Name="opportunity_documents">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="opportunity_id" Type="Guid" Nullable="false" />
+          <Property Name="file_url" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="opportunity" Relationship="Self.FK__opportuni__oppor__114A936A" FromRole="opportunity_documents" ToRole="opportunities" />
+        </EntityType>
+        <EntityType Name="partner">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="type" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="contact_info" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="password_resets">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="user_id" Type="Guid" Nullable="false" />
+          <Property Name="reset_token" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="expires_at" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="used" Type="Boolean" />
+          <NavigationProperty Name="user" Relationship="Self.FK__password___user___4316F928" FromRole="password_resets" ToRole="users" />
+        </EntityType>
+        <EntityType Name="skill">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="user_skills" Relationship="Self.FK__user_skil__skill__6A30C649" FromRole="skills" ToRole="user_skills" />
+          <NavigationProperty Name="opportunities" Relationship="Self.opportunity_skills" FromRole="skills" ToRole="opportunities" />
+        </EntityType>
+        <EntityType Name="user_courses">
+          <Key>
+            <PropertyRef Name="user_id" />
+            <PropertyRef Name="course_id" />
+          </Key>
+          <Property Name="user_id" Type="Guid" Nullable="false" />
+          <Property Name="course_id" Type="Guid" Nullable="false" />
+          <Property Name="status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="cours" Relationship="Self.FK__user_cour__cours__245D67DE" FromRole="user_courses" ToRole="courses" />
+          <NavigationProperty Name="user" Relationship="Self.FK__user_cour__user___236943A5" FromRole="user_courses" ToRole="users" />
+        </EntityType>
+        <EntityType Name="user_sessions">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="user_id" Type="Guid" Nullable="false" />
+          <Property Name="refresh_token" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="expires_at" Type="DateTime" Precision="7" />
+          <Property Name="created_at" Type="DateTime" Precision="7" />
+          <NavigationProperty Name="user" Relationship="Self.FK__user_sess__user___47DBAE45" FromRole="user_sessions" ToRole="users" />
+        </EntityType>
+        <EntityType Name="user_skills">
+          <Key>
+            <PropertyRef Name="user_id" />
+            <PropertyRef Name="skill_id" />
+          </Key>
+          <Property Name="user_id" Type="Guid" Nullable="false" />
+          <Property Name="skill_id" Type="Guid" Nullable="false" />
+          <Property Name="proficiency_level" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="skill" Relationship="Self.FK__user_skil__skill__6A30C649" FromRole="user_skills" ToRole="skills" />
+          <NavigationProperty Name="user" Relationship="Self.FK__user_skil__user___693CA210" FromRole="user_skills" ToRole="users" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="phone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="password_hash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="role" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="is_verified" Type="Boolean" />
+          <Property Name="is_active" Type="Boolean" />
+          <Property Name="created_at" Type="DateTime" Precision="7" />
+          <Property Name="updated_at" Type="DateTime" Precision="7" />
+          <Property Name="deleted_at" Type="DateTime" Precision="7" />
+          <NavigationProperty Name="analytics_events" Relationship="Self.FK__analytics__user___37703C52" FromRole="users" ToRole="analytics_events" />
+          <NavigationProperty Name="applications" Relationship="Self.FK__applicati__user___18EBB532" FromRole="users" ToRole="applications" />
+          <NavigationProperty Name="audit_logs" Relationship="Self.FK__audit_log__user___3C34F16F" FromRole="users" ToRole="audit_logs" />
+          <NavigationProperty Name="company_users" Relationship="Self.FK__company_u__user___02084FDA" FromRole="users" ToRole="company_users" />
+          <NavigationProperty Name="documents" Relationship="Self.FK__documents__user___73BA3083" FromRole="users" ToRole="documents" />
+          <NavigationProperty Name="educations" Relationship="Self.FK__education__user___628FA481" FromRole="users" ToRole="education" />
+          <NavigationProperty Name="generated_cvs" Relationship="Self.FK__generated__user___787EE5A0" FromRole="users" ToRole="generated_cvs" />
+          <NavigationProperty Name="password_resets" Relationship="Self.FK__password___user___4316F928" FromRole="users" ToRole="password_resets" />
+          <NavigationProperty Name="user_courses" Relationship="Self.FK__user_cour__user___236943A5" FromRole="users" ToRole="user_courses" />
+          <NavigationProperty Name="user_sessions" Relationship="Self.FK__user_sess__user___47DBAE45" FromRole="users" ToRole="user_sessions" />
+          <NavigationProperty Name="user_skills" Relationship="Self.FK__user_skil__user___693CA210" FromRole="users" ToRole="user_skills" />
+          <NavigationProperty Name="verifications" Relationship="Self.FK__verificat__user___31B762FC" FromRole="users" ToRole="verifications" />
+          <NavigationProperty Name="verifications1" Relationship="Self.FK__verificat__verif__32AB8735" FromRole="users" ToRole="verifications" />
+          <NavigationProperty Name="work_experience" Relationship="Self.FK__work_expe__user___66603565" FromRole="users" ToRole="work_experience" />
+          <NavigationProperty Name="youth_profiles" Relationship="Self.FK__youth_pro__user___5CD6CB2B" FromRole="users" ToRole="youth_profiles" />
+          <NavigationProperty Name="events" Relationship="Self.event_registrations" FromRole="users" ToRole="events" />
+          <NavigationProperty Name="interests" Relationship="Self.user_interests" FromRole="users" ToRole="interests" />
+        </EntityType>
+        <EntityType Name="verification">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="user_id" Type="Guid" />
+          <Property Name="verification_type" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="verified_by" Type="Guid" />
+          <Property Name="verified_at" Type="DateTime" Precision="7" />
+          <NavigationProperty Name="user" Relationship="Self.FK__verificat__user___31B762FC" FromRole="verifications" ToRole="users" />
+          <NavigationProperty Name="user1" Relationship="Self.FK__verificat__verif__32AB8735" FromRole="verifications" ToRole="users" />
+        </EntityType>
+        <EntityType Name="work_experience">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="user_id" Type="Guid" />
+          <Property Name="company_name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="position" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="start_date" Type="DateTime" Precision="0" />
+          <Property Name="end_date" Type="DateTime" Precision="0" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="user" Relationship="Self.FK__work_expe__user___66603565" FromRole="work_experience" ToRole="users" />
+          <NavigationProperty Name="youth_profiles" Relationship="Self.FK_work_user" FromRole="work_experience" ToRole="youth_profiles" />
+        </EntityType>
+        <EntityType Name="youth_profiles">
+          <Key>
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="user_id" Type="Guid" Nullable="false" />
+          <Property Name="first_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="last_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="date_of_birth" Type="DateTime" Precision="0" />
+          <Property Name="gender" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="id_number" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="availability_status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="drivers_license" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="profile_photo_url" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="bio" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="profile_completion" Type="Int32" />
+          <Property Name="created_at" Type="DateTime" Precision="7" />
+          <Property Name="location" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="educations" Relationship="Self.FK_education_user" FromRole="youth_profiles" ToRole="education" />
+          <NavigationProperty Name="user" Relationship="Self.FK__youth_pro__user___5CD6CB2B" FromRole="youth_profiles" ToRole="users" />
+          <NavigationProperty Name="work_experience" Relationship="Self.FK_work_user" FromRole="youth_profiles" ToRole="work_experience" />
+        </EntityType>
+        <Association Name="FK__analytics__user___37703C52">
+          <End Role="users" Type="Self.user" Multiplicity="0..1" />
+          <End Role="analytics_events" Type="Self.analytics_events" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="analytics_events">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__applicati__oppor__19DFD96B">
+          <End Role="opportunities" Type="Self.opportunity" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="applications" Type="Self.application" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="opportunities">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="applications">
+              <PropertyRef Name="opportunity_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__applicati__user___18EBB532">
+          <End Role="users" Type="Self.user" Multiplicity="1" />
+          <End Role="applications" Type="Self.application" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="applications">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__interview__appli__1DB06A4F">
+          <End Role="applications" Type="Self.application" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="interviews" Type="Self.interview" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="applications">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="interviews">
+              <PropertyRef Name="application_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__audit_log__user___3C34F16F">
+          <End Role="users" Type="Self.user" Multiplicity="0..1" />
+          <End Role="audit_logs" Type="Self.audit_logs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="audit_logs">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__companies__distr__7E37BEF6">
+          <End Role="districts" Type="Self.district" Multiplicity="0..1" />
+          <End Role="companies" Type="Self.company" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="districts">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="companies">
+              <PropertyRef Name="district_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__company_u__compa__01142BA1">
+          <End Role="companies" Type="Self.company" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="company_users" Type="Self.company_users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="companies">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="company_users">
+              <PropertyRef Name="company_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__opportuni__compa__07C12930">
+          <End Role="companies" Type="Self.company" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="opportunities" Type="Self.opportunity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="companies">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="opportunities">
+              <PropertyRef Name="company_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__company_u__user___02084FDA">
+          <End Role="users" Type="Self.user" Multiplicity="1" />
+          <End Role="company_users" Type="Self.company_users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="company_users">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__user_cour__cours__245D67DE">
+          <End Role="courses" Type="Self.cours" Multiplicity="1" />
+          <End Role="user_courses" Type="Self.user_courses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="courses">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="user_courses">
+              <PropertyRef Name="course_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__opportuni__distr__09A971A2">
+          <End Role="districts" Type="Self.district" Multiplicity="0..1" />
+          <End Role="opportunities" Type="Self.opportunity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="districts">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="opportunities">
+              <PropertyRef Name="district_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__documents__user___73BA3083">
+          <End Role="users" Type="Self.user" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="documents" Type="Self.document" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="documents">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__education__user___628FA481">
+          <End Role="users" Type="Self.user" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="education" Type="Self.education" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="education">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_education_user">
+          <End Role="youth_profiles" Type="Self.youth_profiles" Multiplicity="1" />
+          <End Role="education" Type="Self.education" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="youth_profiles">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="education">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__generated__user___787EE5A0">
+          <End Role="users" Type="Self.user" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="generated_cvs" Type="Self.generated_cvs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="generated_cvs">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__opportuni__categ__08B54D69">
+          <End Role="opportunity_categories" Type="Self.opportunity_categories" Multiplicity="0..1" />
+          <End Role="opportunities" Type="Self.opportunity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="opportunity_categories">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="opportunities">
+              <PropertyRef Name="category_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__opportuni__oppor__114A936A">
+          <End Role="opportunities" Type="Self.opportunity" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="opportunity_documents" Type="Self.opportunity_documents" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="opportunities">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="opportunity_documents">
+              <PropertyRef Name="opportunity_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__password___user___4316F928">
+          <End Role="users" Type="Self.user" Multiplicity="1" />
+          <End Role="password_resets" Type="Self.password_resets" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="password_resets">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__user_skil__skill__6A30C649">
+          <End Role="skills" Type="Self.skill" Multiplicity="1" />
+          <End Role="user_skills" Type="Self.user_skills" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="skills">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="user_skills">
+              <PropertyRef Name="skill_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__user_cour__user___236943A5">
+          <End Role="users" Type="Self.user" Multiplicity="1" />
+          <End Role="user_courses" Type="Self.user_courses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="user_courses">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__user_sess__user___47DBAE45">
+          <End Role="users" Type="Self.user" Multiplicity="1" />
+          <End Role="user_sessions" Type="Self.user_sessions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="user_sessions">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__user_skil__user___693CA210">
+          <End Role="users" Type="Self.user" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="user_skills" Type="Self.user_skills" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="user_skills">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__verificat__user___31B762FC">
+          <End Role="users" Type="Self.user" Multiplicity="0..1" />
+          <End Role="verifications" Type="Self.verification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="verifications">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__verificat__verif__32AB8735">
+          <End Role="users" Type="Self.user" Multiplicity="0..1" />
+          <End Role="verifications" Type="Self.verification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="verifications">
+              <PropertyRef Name="verified_by" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__work_expe__user___66603565">
+          <End Role="users" Type="Self.user" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="work_experience" Type="Self.work_experience" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="work_experience">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__youth_pro__user___5CD6CB2B">
+          <End Role="users" Type="Self.user" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="youth_profiles" Type="Self.youth_profiles" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="youth_profiles">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_work_user">
+          <End Role="youth_profiles" Type="Self.youth_profiles" Multiplicity="0..1" />
+          <End Role="work_experience" Type="Self.work_experience" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="youth_profiles">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="work_experience">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="event_registrations">
+          <End Role="events" Type="Self.event" Multiplicity="*" />
+          <End Role="users" Type="Self.user" Multiplicity="*" />
+        </Association>
+        <Association Name="opportunity_skills">
+          <End Role="opportunities" Type="Self.opportunity" Multiplicity="*" />
+          <End Role="skills" Type="Self.skill" Multiplicity="*" />
+        </Association>
+        <Association Name="user_interests">
+          <End Role="interests" Type="Self.interest" Multiplicity="*" />
+          <End Role="users" Type="Self.user" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="RoyalPortalDbEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="analytics_events" EntityType="Self.analytics_events" />
+          <EntitySet Name="applications" EntityType="Self.application" />
+          <EntitySet Name="audit_logs" EntityType="Self.audit_logs" />
+          <EntitySet Name="bursaries" EntityType="Self.bursary" />
+          <EntitySet Name="companies" EntityType="Self.company" />
+          <EntitySet Name="company_users" EntityType="Self.company_users" />
+          <EntitySet Name="courses" EntityType="Self.cours" />
+          <EntitySet Name="districts" EntityType="Self.district" />
+          <EntitySet Name="documents" EntityType="Self.document" />
+          <EntitySet Name="educations" EntityType="Self.education" />
+          <EntitySet Name="events" EntityType="Self.event" />
+          <EntitySet Name="generated_cvs" EntityType="Self.generated_cvs" />
+          <EntitySet Name="interests" EntityType="Self.interest" />
+          <EntitySet Name="interviews" EntityType="Self.interview" />
+          <EntitySet Name="opportunities" EntityType="Self.opportunity" />
+          <EntitySet Name="opportunity_categories" EntityType="Self.opportunity_categories" />
+          <EntitySet Name="opportunity_documents" EntityType="Self.opportunity_documents" />
+          <EntitySet Name="partners" EntityType="Self.partner" />
+          <EntitySet Name="password_resets" EntityType="Self.password_resets" />
+          <EntitySet Name="skills" EntityType="Self.skill" />
+          <EntitySet Name="user_courses" EntityType="Self.user_courses" />
+          <EntitySet Name="user_sessions" EntityType="Self.user_sessions" />
+          <EntitySet Name="user_skills" EntityType="Self.user_skills" />
+          <EntitySet Name="users" EntityType="Self.user" />
+          <EntitySet Name="verifications" EntityType="Self.verification" />
+          <EntitySet Name="work_experience" EntityType="Self.work_experience" />
+          <EntitySet Name="youth_profiles" EntityType="Self.youth_profiles" />
+          <AssociationSet Name="FK__analytics__user___37703C52" Association="Self.FK__analytics__user___37703C52">
+            <End Role="users" EntitySet="users" />
+            <End Role="analytics_events" EntitySet="analytics_events" />
+          </AssociationSet>
+          <AssociationSet Name="FK__applicati__oppor__19DFD96B" Association="Self.FK__applicati__oppor__19DFD96B">
+            <End Role="opportunities" EntitySet="opportunities" />
+            <End Role="applications" EntitySet="applications" />
+          </AssociationSet>
+          <AssociationSet Name="FK__applicati__user___18EBB532" Association="Self.FK__applicati__user___18EBB532">
+            <End Role="users" EntitySet="users" />
+            <End Role="applications" EntitySet="applications" />
+          </AssociationSet>
+          <AssociationSet Name="FK__interview__appli__1DB06A4F" Association="Self.FK__interview__appli__1DB06A4F">
+            <End Role="applications" EntitySet="applications" />
+            <End Role="interviews" EntitySet="interviews" />
+          </AssociationSet>
+          <AssociationSet Name="FK__audit_log__user___3C34F16F" Association="Self.FK__audit_log__user___3C34F16F">
+            <End Role="users" EntitySet="users" />
+            <End Role="audit_logs" EntitySet="audit_logs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__companies__distr__7E37BEF6" Association="Self.FK__companies__distr__7E37BEF6">
+            <End Role="districts" EntitySet="districts" />
+            <End Role="companies" EntitySet="companies" />
+          </AssociationSet>
+          <AssociationSet Name="FK__company_u__compa__01142BA1" Association="Self.FK__company_u__compa__01142BA1">
+            <End Role="companies" EntitySet="companies" />
+            <End Role="company_users" EntitySet="company_users" />
+          </AssociationSet>
+          <AssociationSet Name="FK__opportuni__compa__07C12930" Association="Self.FK__opportuni__compa__07C12930">
+            <End Role="companies" EntitySet="companies" />
+            <End Role="opportunities" EntitySet="opportunities" />
+          </AssociationSet>
+          <AssociationSet Name="FK__company_u__user___02084FDA" Association="Self.FK__company_u__user___02084FDA">
+            <End Role="users" EntitySet="users" />
+            <End Role="company_users" EntitySet="company_users" />
+          </AssociationSet>
+          <AssociationSet Name="FK__user_cour__cours__245D67DE" Association="Self.FK__user_cour__cours__245D67DE">
+            <End Role="courses" EntitySet="courses" />
+            <End Role="user_courses" EntitySet="user_courses" />
+          </AssociationSet>
+          <AssociationSet Name="FK__opportuni__distr__09A971A2" Association="Self.FK__opportuni__distr__09A971A2">
+            <End Role="districts" EntitySet="districts" />
+            <End Role="opportunities" EntitySet="opportunities" />
+          </AssociationSet>
+          <AssociationSet Name="FK__documents__user___73BA3083" Association="Self.FK__documents__user___73BA3083">
+            <End Role="users" EntitySet="users" />
+            <End Role="documents" EntitySet="documents" />
+          </AssociationSet>
+          <AssociationSet Name="FK__education__user___628FA481" Association="Self.FK__education__user___628FA481">
+            <End Role="users" EntitySet="users" />
+            <End Role="education" EntitySet="educations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_education_user" Association="Self.FK_education_user">
+            <End Role="youth_profiles" EntitySet="youth_profiles" />
+            <End Role="education" EntitySet="educations" />
+          </AssociationSet>
+          <AssociationSet Name="FK__generated__user___787EE5A0" Association="Self.FK__generated__user___787EE5A0">
+            <End Role="users" EntitySet="users" />
+            <End Role="generated_cvs" EntitySet="generated_cvs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__opportuni__categ__08B54D69" Association="Self.FK__opportuni__categ__08B54D69">
+            <End Role="opportunity_categories" EntitySet="opportunity_categories" />
+            <End Role="opportunities" EntitySet="opportunities" />
+          </AssociationSet>
+          <AssociationSet Name="FK__opportuni__oppor__114A936A" Association="Self.FK__opportuni__oppor__114A936A">
+            <End Role="opportunities" EntitySet="opportunities" />
+            <End Role="opportunity_documents" EntitySet="opportunity_documents" />
+          </AssociationSet>
+          <AssociationSet Name="FK__password___user___4316F928" Association="Self.FK__password___user___4316F928">
+            <End Role="users" EntitySet="users" />
+            <End Role="password_resets" EntitySet="password_resets" />
+          </AssociationSet>
+          <AssociationSet Name="FK__user_skil__skill__6A30C649" Association="Self.FK__user_skil__skill__6A30C649">
+            <End Role="skills" EntitySet="skills" />
+            <End Role="user_skills" EntitySet="user_skills" />
+          </AssociationSet>
+          <AssociationSet Name="FK__user_cour__user___236943A5" Association="Self.FK__user_cour__user___236943A5">
+            <End Role="users" EntitySet="users" />
+            <End Role="user_courses" EntitySet="user_courses" />
+          </AssociationSet>
+          <AssociationSet Name="FK__user_sess__user___47DBAE45" Association="Self.FK__user_sess__user___47DBAE45">
+            <End Role="users" EntitySet="users" />
+            <End Role="user_sessions" EntitySet="user_sessions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__user_skil__user___693CA210" Association="Self.FK__user_skil__user___693CA210">
+            <End Role="users" EntitySet="users" />
+            <End Role="user_skills" EntitySet="user_skills" />
+          </AssociationSet>
+          <AssociationSet Name="FK__verificat__user___31B762FC" Association="Self.FK__verificat__user___31B762FC">
+            <End Role="users" EntitySet="users" />
+            <End Role="verifications" EntitySet="verifications" />
+          </AssociationSet>
+          <AssociationSet Name="FK__verificat__verif__32AB8735" Association="Self.FK__verificat__verif__32AB8735">
+            <End Role="users" EntitySet="users" />
+            <End Role="verifications" EntitySet="verifications" />
+          </AssociationSet>
+          <AssociationSet Name="FK__work_expe__user___66603565" Association="Self.FK__work_expe__user___66603565">
+            <End Role="users" EntitySet="users" />
+            <End Role="work_experience" EntitySet="work_experience" />
+          </AssociationSet>
+          <AssociationSet Name="FK__youth_pro__user___5CD6CB2B" Association="Self.FK__youth_pro__user___5CD6CB2B">
+            <End Role="users" EntitySet="users" />
+            <End Role="youth_profiles" EntitySet="youth_profiles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_work_user" Association="Self.FK_work_user">
+            <End Role="youth_profiles" EntitySet="youth_profiles" />
+            <End Role="work_experience" EntitySet="work_experience" />
+          </AssociationSet>
+          <AssociationSet Name="event_registrations" Association="Self.event_registrations">
+            <End Role="events" EntitySet="events" />
+            <End Role="users" EntitySet="users" />
+          </AssociationSet>
+          <AssociationSet Name="opportunity_skills" Association="Self.opportunity_skills">
+            <End Role="opportunities" EntitySet="opportunities" />
+            <End Role="skills" EntitySet="skills" />
+          </AssociationSet>
+          <AssociationSet Name="user_interests" Association="Self.user_interests">
+            <End Role="interests" EntitySet="interests" />
+            <End Role="users" EntitySet="users" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="RoyalPortalDbModelStoreContainer" CdmEntityContainer="RoyalPortalDbEntities">
+          <EntitySetMapping Name="analytics_events">
+            <EntityTypeMapping TypeName="RoyalPortalDbModel.analytics_events">
+              <MappingFragment StoreEntitySet="analytics_events">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="event_type" ColumnName="event_type" />
+                <ScalarProperty Name="metadata" ColumnName="metadata" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="applications">
+            <EntityTypeMapping TypeName="RoyalPortalDbModel.application">
+              <MappingFragment StoreEntitySet="applications">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="opportunity_id" ColumnName="opportunity_id" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="applied_at" ColumnName="applied_at" />
+                <ScalarProperty Name="updated_at" ColumnName="updated_at" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="audit_logs">
+            <EntityTypeMapping TypeName="RoyalPortalDbModel.audit_logs">
+              <MappingFragment StoreEntitySet="audit_logs">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="action" ColumnName="action" />
+                <ScalarProperty Name="table_name" ColumnName="table_name" />
+                <ScalarProperty Name="record_id" ColumnName="record_id" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="bursaries">
+            <EntityTypeMapping TypeName="RoyalPortalDbModel.bursary">
+              <MappingFragment StoreEntitySet="bursaries">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="sponsor" ColumnName="sponsor" />
+                <ScalarProperty Name="amount" ColumnName="amount" />
+                <ScalarProperty Name="requirements" ColumnName="requirements" />
+                <ScalarProperty Name="closing_date" ColumnName="closing_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="companies">
+            <EntityTypeMapping TypeName="RoyalPortalDbModel.company">
+              <MappingFragment StoreEntitySet="companies">
+                <ScalarProperty Name="ContactPerson" ColumnName="ContactPerson" />
+                <ScalarProperty Name="physical_address" ColumnName="physical_address" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="logo_url" ColumnName="logo_url" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="website" ColumnName="website" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="company_name" ColumnName="company_name" />
+                <ScalarProperty Name="registration_number" ColumnName="registration_number" />
+                <ScalarProperty Name="industry" ColumnName="industry" />
+                <ScalarProperty Name="district_id" ColumnName="district_id" />
+                <ScalarProperty Name="verified" ColumnName="verified" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="company_users">
+            <EntityTypeMapping TypeName="RoyalPortalDbModel.company_users">
+              <MappingFragment StoreEntitySet="company_users">
+                <ScalarProperty Name="company_id" ColumnName="company_id" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="role" ColumnName="role" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="courses">
+            <EntityTypeMapping TypeName="RoyalPortalDbModel.cours">
+              <MappingFragment StoreEntitySet="courses">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="provider" ColumnName="provider" />
+                <ScalarProperty Name="description" ColumnName="description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="districts">
+            <EntityTypeMapping TypeName="RoyalPortalDbModel.district">
+              <MappingFragment StoreEntitySet="districts">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="documents">
+            <EntityTypeMapping TypeName="RoyalPortalDbModel.document">
+              <MappingFragment StoreEntitySet="documents">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="document_type" ColumnName="document_type" />
+                <ScalarProperty Name="file_url" ColumnName="file_url" />
+                <ScalarProperty Name="is_verified" ColumnName="is_verified" />
+                <ScalarProperty Name="uploaded_at" ColumnName="uploaded_at" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="educations">
+            <EntityTypeMapping TypeName="RoyalPortalDbModel.education">
+              <MappingFragment StoreEntitySet="education">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="institution_name" ColumnName="institution_name" />
+                <ScalarProperty Name="qualification" ColumnName="qualification" />
+                <ScalarProperty Name="field_of_study" ColumnName="field_of_study" />
+                <ScalarProperty Name="level" ColumnName="level" />
+                <ScalarProperty Name="start_date" ColumnName="start_date" />
+                <ScalarProperty Name="end_date" ColumnName="end_date" />
+                <ScalarProperty Name="completed" ColumnName="completed" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="events">
+            <EntityTypeMapping TypeName="RoyalPortalDbModel.event">
+              <MappingFragment StoreEntitySet="events">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="event_date" ColumnName="event_date" />
+                <ScalarProperty Name="location" ColumnName="location" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="generated_cvs">
+            <EntityTypeMapping TypeName="RoyalPortalDbModel.generated_cvs">
+              <MappingFragment StoreEntitySet="generated_cvs">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="file_url" ColumnName="file_url" />
+                <ScalarProperty Name="generated_at" ColumnName="generated_at" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="interests">
+            <EntityTypeMapping TypeName="RoyalPortalDbModel.interest">
+              <MappingFragment StoreEntitySet="interests">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="interviews">
+            <EntityTypeMapping TypeName="RoyalPortalDbModel.interview">
+              <MappingFragment StoreEntitySet="interviews">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="application_id" ColumnName="application_id" />
+                <ScalarProperty Name="interview_date" ColumnName="interview_date" />
+                <ScalarProperty Name="interview_mode" ColumnName="interview_mode" />
+                <ScalarProperty Name="notes" ColumnName="notes" />
+                <ScalarProperty Name="status" ColumnName="status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="opportunities">
+            <EntityTypeMapping TypeName="RoyalPortalDbModel.opportunity">
+              <MappingFragment StoreEntitySet="opportunities">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="company_id" ColumnName="company_id" />
+                <ScalarProperty Name="category_id" ColumnName="category_id" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="location" ColumnName="location" />
+                <ScalarProperty Name="district_id" ColumnName="district_id" />
+                <ScalarProperty Name="requirements" ColumnName="requirements" />
+                <ScalarProperty Name="stipend" ColumnName="stipend" />
+                <ScalarProperty Name="closing_date" ColumnName="closing_date" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="opportunity_categories">
+            <EntityTypeMapping TypeName="RoyalPortalDbModel.opportunity_categories">
+              <MappingFragment StoreEntitySet="opportunity_categories">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="opportunity_documents">
+            <EntityTypeMapping TypeName="RoyalPortalDbModel.opportunity_documents">
+              <MappingFragment StoreEntitySet="opportunity_documents">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="opportunity_id" ColumnName="opportunity_id" />
+                <ScalarProperty Name="file_url" ColumnName="file_url" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="partners">
+            <EntityTypeMapping TypeName="RoyalPortalDbModel.partner">
+              <MappingFragment StoreEntitySet="partners">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="contact_info" ColumnName="contact_info" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="password_resets">
+            <EntityTypeMapping TypeName="RoyalPortalDbModel.password_resets">
+              <MappingFragment StoreEntitySet="password_resets">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="reset_token" ColumnName="reset_token" />
+                <ScalarProperty Name="expires_at" ColumnName="expires_at" />
+                <ScalarProperty Name="used" ColumnName="used" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="skills">
+            <EntityTypeMapping TypeName="RoyalPortalDbModel.skill">
+              <MappingFragment StoreEntitySet="skills">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="user_courses">
+            <EntityTypeMapping TypeName="RoyalPortalDbModel.user_courses">
+              <MappingFragment StoreEntitySet="user_courses">
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="course_id" ColumnName="course_id" />
+                <ScalarProperty Name="status" ColumnName="status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="user_sessions">
+            <EntityTypeMapping TypeName="RoyalPortalDbModel.user_sessions">
+              <MappingFragment StoreEntitySet="user_sessions">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="refresh_token" ColumnName="refresh_token" />
+                <ScalarProperty Name="expires_at" ColumnName="expires_at" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="user_skills">
+            <EntityTypeMapping TypeName="RoyalPortalDbModel.user_skills">
+              <MappingFragment StoreEntitySet="user_skills">
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="skill_id" ColumnName="skill_id" />
+                <ScalarProperty Name="proficiency_level" ColumnName="proficiency_level" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="users">
+            <EntityTypeMapping TypeName="RoyalPortalDbModel.user">
+              <MappingFragment StoreEntitySet="users">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="password_hash" ColumnName="password_hash" />
+                <ScalarProperty Name="role" ColumnName="role" />
+                <ScalarProperty Name="is_verified" ColumnName="is_verified" />
+                <ScalarProperty Name="is_active" ColumnName="is_active" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="updated_at" ColumnName="updated_at" />
+                <ScalarProperty Name="deleted_at" ColumnName="deleted_at" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="verifications">
+            <EntityTypeMapping TypeName="RoyalPortalDbModel.verification">
+              <MappingFragment StoreEntitySet="verifications">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="verification_type" ColumnName="verification_type" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="verified_by" ColumnName="verified_by" />
+                <ScalarProperty Name="verified_at" ColumnName="verified_at" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="work_experience">
+            <EntityTypeMapping TypeName="RoyalPortalDbModel.work_experience">
+              <MappingFragment StoreEntitySet="work_experience">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="company_name" ColumnName="company_name" />
+                <ScalarProperty Name="position" ColumnName="position" />
+                <ScalarProperty Name="start_date" ColumnName="start_date" />
+                <ScalarProperty Name="end_date" ColumnName="end_date" />
+                <ScalarProperty Name="description" ColumnName="description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="youth_profiles">
+            <EntityTypeMapping TypeName="RoyalPortalDbModel.youth_profiles">
+              <MappingFragment StoreEntitySet="youth_profiles">
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="first_name" ColumnName="first_name" />
+                <ScalarProperty Name="last_name" ColumnName="last_name" />
+                <ScalarProperty Name="date_of_birth" ColumnName="date_of_birth" />
+                <ScalarProperty Name="gender" ColumnName="gender" />
+                <ScalarProperty Name="id_number" ColumnName="id_number" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="availability_status" ColumnName="availability_status" />
+                <ScalarProperty Name="drivers_license" ColumnName="drivers_license" />
+                <ScalarProperty Name="profile_photo_url" ColumnName="profile_photo_url" />
+                <ScalarProperty Name="bio" ColumnName="bio" />
+                <ScalarProperty Name="profile_completion" ColumnName="profile_completion" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="location" ColumnName="location" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="event_registrations" TypeName="RoyalPortalDbModel.event_registrations" StoreEntitySet="event_registrations">
+            <EndProperty Name="events">
+              <ScalarProperty Name="id" ColumnName="event_id" />
+            </EndProperty>
+            <EndProperty Name="users">
+              <ScalarProperty Name="id" ColumnName="user_id" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="opportunity_skills" TypeName="RoyalPortalDbModel.opportunity_skills" StoreEntitySet="opportunity_skills">
+            <EndProperty Name="opportunities">
+              <ScalarProperty Name="id" ColumnName="opportunity_id" />
+            </EndProperty>
+            <EndProperty Name="skills">
+              <ScalarProperty Name="id" ColumnName="skill_id" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="user_interests" TypeName="RoyalPortalDbModel.user_interests" StoreEntitySet="user_interests">
+            <EndProperty Name="interests">
+              <ScalarProperty Name="id" ColumnName="interest_id" />
+            </EndProperty>
+            <EndProperty Name="users">
+              <ScalarProperty Name="id" ColumnName="user_id" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

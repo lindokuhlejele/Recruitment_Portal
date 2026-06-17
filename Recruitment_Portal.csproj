@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="packages\EntityFramework.6.5.2\build\EntityFramework.props" Condition="Exists('packages\EntityFramework.6.5.2\build\EntityFramework.props')" />
   <Import Project="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -45,10 +46,36 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BouncyCastle.Crypto, Version=1.9.0.0, Culture=neutral, PublicKeyToken=0e99375e54769942, processorArchitecture=MSIL">
+      <HintPath>packages\Portable.BouncyCastle.1.9.0\lib\net40\BouncyCastle.Crypto.dll</HintPath>
+    </Reference>
+    <Reference Include="DocumentFormat.OpenXml, Version=3.5.1.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
+      <HintPath>packages\DocumentFormat.OpenXml.3.5.1\lib\net46\DocumentFormat.OpenXml.dll</HintPath>
+    </Reference>
+    <Reference Include="DocumentFormat.OpenXml.Framework, Version=3.5.1.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
+      <HintPath>packages\DocumentFormat.OpenXml.Framework.3.5.1\lib\net46\DocumentFormat.OpenXml.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>packages\EntityFramework.6.5.2\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>packages\EntityFramework.6.5.2\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Intercom, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\Intercom.Dotnet.Client.2.1.1\lib\net452\Intercom.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="RestSharp, Version=106.5.4.0, Culture=neutral, PublicKeyToken=598062e77f915f75, processorArchitecture=MSIL">
+      <HintPath>packages\RestSharp.106.5.4\lib\net452\RestSharp.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -110,6 +137,7 @@
       <Private>True</Private>
       <HintPath>packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform">
@@ -120,11 +148,123 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ApplicationsController.cs" />
+    <Compile Include="Controllers\CandidateController.cs" />
+    <Compile Include="Controllers\CompanyController.cs" />
+    <Compile Include="Controllers\EducationController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\OpportunitiesController.cs" />
+    <Compile Include="Controllers\WorkExperienceController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\analytics_events.cs">
+      <DependentUpon>royaldb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ApplicantVM.cs" />
+    <Compile Include="Models\application.cs">
+      <DependentUpon>royaldb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\audit_logs.cs">
+      <DependentUpon>royaldb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\bursary.cs">
+      <DependentUpon>royaldb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\company.cs">
+      <DependentUpon>royaldb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CompanyRegisterVM.cs" />
+    <Compile Include="Models\company_users.cs">
+      <DependentUpon>royaldb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\cours.cs">
+      <DependentUpon>royaldb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\district.cs">
+      <DependentUpon>royaldb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\document.cs">
+      <DependentUpon>royaldb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\education.cs">
+      <DependentUpon>royaldb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EducationVM.cs" />
+    <Compile Include="Models\event.cs">
+      <DependentUpon>royaldb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\generated_cvs.cs">
+      <DependentUpon>royaldb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\interest.cs">
+      <DependentUpon>royaldb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\interview.cs">
+      <DependentUpon>royaldb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\opportunity.cs">
+      <DependentUpon>royaldb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\OpportunityListVM.cs" />
+    <Compile Include="Models\opportunity_categories.cs">
+      <DependentUpon>royaldb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\opportunity_documents.cs">
+      <DependentUpon>royaldb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\partner.cs">
+      <DependentUpon>royaldb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\password_resets.cs">
+      <DependentUpon>royaldb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\royaldb.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>royaldb.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\royaldb.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>royaldb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\royaldb.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>royaldb.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\skill.cs">
+      <DependentUpon>royaldb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\user.cs">
+      <DependentUpon>royaldb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\user_courses.cs">
+      <DependentUpon>royaldb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\user_sessions.cs">
+      <DependentUpon>royaldb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\user_skills.cs">
+      <DependentUpon>royaldb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\verification.cs">
+      <DependentUpon>royaldb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ViewModels\OpportunityVM.cs" />
+    <Compile Include="Models\work_experience.cs">
+      <DependentUpon>royaldb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\YouthRegistrationRequest.cs" />
+    <Compile Include="Models\youth_profiles.cs">
+      <DependentUpon>royaldb.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\ProfileCompletionService.cs" />
+    <Compile Include="Utils\AuthHelper.cs" />
+    <Compile Include="Utils\PasswordHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-grid.css" />
@@ -146,12 +286,29 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Models\royaldb.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>royaldb.edmx</DependentUpon>
+      <LastGenOutput>royaldb.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\royaldb.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>royaldb.edmx</DependentUpon>
+      <LastGenOutput>royaldb.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
     <Content Include="Scripts\bootstrap.esm.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <EntityDeploy Include="Models\royaldb.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>royaldb.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\royaldb.edmx.diagram">
+      <DependentUpon>royaldb.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
     <Content Include="Scripts\jquery-3.7.0.min.js" />
@@ -177,10 +334,25 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Candidate\Dashboard.cshtml" />
+    <Content Include="Views\WorkExperience\Index.cshtml" />
+    <Content Include="Views\Shared\_DashboardLayout.cshtml" />
+    <Content Include="Views\Candidate\_Profile.cshtml" />
+    <Content Include="Views\Candidate\UserProfile.cshtml" />
+    <Content Include="Views\Shared\_UploadDocuments.cshtml" />
+    <Content Include="Views\Education\Index.cshtml" />
+    <Content Include="Views\Company\CompanyDashboard.cshtml" />
+    <Content Include="Views\Company\Opportunities.cshtml" />
+    <Content Include="Views\Company\Pipeline.cshtml" />
+    <Content Include="Views\Opportunities\Index.cshtml" />
+    <Content Include="Views\Opportunities\Details.cshtml" />
+    <Content Include="Views\Company\Applicants.cshtml" />
+    <Content Include="Views\Candidate\MyApplications.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
+    <Folder Include="Views\Applications\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />
@@ -208,6 +380,9 @@
     <Content Include="Scripts\bootstrap.bundle.js.map" />
     <Content Include="Scripts\jquery-3.7.0.slim.min.map" />
     <Content Include="Scripts\jquery-3.7.0.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -242,7 +417,10 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+    <Error Condition="!Exists('packages\EntityFramework.6.5.2\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\EntityFramework.6.5.2\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('packages\EntityFramework.6.5.2\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\EntityFramework.6.5.2\build\EntityFramework.targets'))" />
   </Target>
+  <Import Project="packages\EntityFramework.6.5.2\build\EntityFramework.targets" Condition="Exists('packages\EntityFramework.6.5.2\build\EntityFramework.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

@@ -1,0 +1,338 @@
+﻿@{
+    var education = Model as List<Recruitment_Portal.Models.education>
+                    ?? new List<Recruitment_Portal.Models.education>();
+
+    var userId = ViewBag.UserId;
+    var profile = ViewBag.Profile;
+    int completion = ViewBag.Completion ?? 0;
+    var missing = ViewBag.MissingFields as List<string> ?? new List<string>();
+}
+
+<title>Education - Dashboard</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<div class="bg-gray-100 py-6 px-4">
+
+    <!-- CENTER CONTAINER (keeps alignment with dashboard) -->
+    <div class="max-w-7xl mx-auto space-y-6">
+
+
+
+        <!-- PROFILE HEADER CARD -->
+        <div class="bg-white rounded-xl shadow p-6 border border-gray-100">
+
+            <div class="flex flex-col lg:flex-row lg:justify-between lg:items-center gap-4">
+
+                <div>
+                    <h2 class="font-bold text-xl">
+                        Welcome, KZN Young Citizen
+                    </h2>
+
+                    <p class="text-sm text-gray-500 mt-1">
+                        Verify details, match regional job listings, and control your POPIA compliance data.
+                    </p>
+                </div>
+
+                <div class="flex flex-wrap items-center gap-3">
+
+                    <span class="text-xs bg-green-50 text-green-700 px-3 py-2 rounded-full font-medium">
+                        ROLE: CANDIDATE
+                    </span>
+
+                    <button class="text-sm border border-gray-300 px-4 py-2 rounded-lg hover:bg-gray-100">
+                        Sign Out
+                    </button>
+
+                    <button class="text-sm bg-red-50 text-red-600 px-4 py-2 rounded-lg hover:bg-red-100">
+                        POPIA Purge Profile
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+<!-- PAGE BACKGROUND -->
+<div class="min-h-screen bg-gray-100 flex justify-center p-6">
+
+
+    <!-- SAAS DASHBOARD CONTAINER -->
+    <div class="w-full max-w-7xl bg-gray-50 rounded-2xl shadow-xl overflow-hidden flex">
+
+        <!-- LEFT SIDEBAR -->
+        <div class="w-80 bg-white border-r">
+
+            <div class="w-80 space-y-4 p-4">
+
+
+                <!-- PROFILE INTEGRITY CARD -->
+                <!---data-->
+                <div class="bg-white rounded-xl shadow p-4">
+
+                    <h3 class="text-sm font-semibold mb-3">PROFILE INTEGRITY METER</h3>
+
+                    @*<div class="w-full bg-gray-200 rounded-full h-2">
+                        <div class="bg-green-500 h-2 rounded-full"
+                             style="width:@ViewBag.Completion%"></div>
+                    </div>
+
+                    <p class="text-xs mt-1 text-gray-500">
+                        @ViewBag.Completion% Complete
+                    </p>*@
+
+                    @if (missing.Count > 0)
+                    {
+                        <div class="mt-3">
+                            <p class="text-xs text-red-500 font-semibold">Missing Fields:</p>
+
+                            <ul class="text-xs text-gray-600 mt-1 space-y-1">
+                                @foreach (var m in missing)
+                                {
+                                    <li>• @m</li>
+                                }
+                            </ul>
+                        </div>
+                    }
+                    else
+                    {
+                        <p class="text-xs text-green-600 mt-2 font-semibold">
+                            Profile fully completed 🎉
+                        </p>
+                    }
+
+                </div>
+
+                <!-- MENU CARD -->
+                <div class="bg-white rounded-xl shadow p-4">
+
+                    <div class="space-y-2">
+
+                        <a href="@Url.Action("Dashboard", "Candidate")"
+                           class="block text-sm text-green-800 font-semibold px-3 py-2 hover:bg-gray-100 rounded-lg">
+                            Dashboard
+                        </a>
+
+                        <a href="@Url.Action("UserProfile", "Candidate")"
+                           class="block text-sm text-gray-700 px-3 py-2 hover:bg-gray-100 rounded-lg">
+                            My Resume Profile
+                        </a>
+
+                        <a href="@Url.Action("Index", "WorkExperience")"
+                           class="block text-sm text-gray-700 px-3 py-2 hover:bg-gray-100 rounded-lg">
+                            Work Experience
+                        </a>
+
+                        <a href="@Url.Action("Index", "Education")"
+                           class="block text-sm text-gray-700 px-3 py-2 hover:bg-gray-100 rounded-lg">
+                            Education
+                        </a>
+                        <a href="@Url.Action("MyApplications","Applications")"
+                           class="block text-sm text-gray-700 px-3 py-2 hover:bg-gray-100 rounded-lg">
+                            My Applications
+                        </a>
+
+
+
+                    </div>
+                </div>
+
+                <!-- CV UPLOAD -->
+                <div class="bg-white rounded-xl shadow p-4 text-center">
+                    <h3 class="text-sm font-semibold mb-2">QUALIFICATION CV ATTACHMENT</h3>
+
+                    <div class="border-2 border-dashed rounded-lg p-4 text-xs text-gray-500">
+                        Click to load qualifying CV<br>
+                        PDF, DOC up to 5MB
+                    </div>
+                </div>
+
+                <!-- SUBMISSIONS -->
+                <div class="bg-white rounded-xl shadow p-4">
+                    <h3 class="text-sm font-semibold">ACTIONED SUBMISSIONS (0)</h3>
+                    <p class="text-xs text-gray-400 mt-2">No submissions made yet.</p>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- MAIN CONTENT -->
+        <div class="flex-1 p-6 overflow-y-auto max-h-[calc(100vh-3rem)]">
+
+            <!-- HEADER -->
+            <!-- TOP HEADER -->
+            <div class="bg-white rounded-xl shadow p-6">
+                <h1 class="text-2xl font-bold">Education</h1>
+                <p class="text-sm text-gray-500 mt-1">
+                    Add your academic qualifications to improve your profile score.
+                </p>
+            </div>
+            <br />
+            <!-- ADD BUTTON -->
+            <div class="flex justify-between items-center">
+                <h1 class="font-semibold text-lg">My Education</h1>
+               
+                <button onclick="toggleForm()"
+                        class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600">
+                    + Add Education
+                </button>
+            </div>
+            <br />
+            <!-- ADD FORM -->
+            <div id="formBox" class="hidden bg-white p-4 rounded-xl shadow">
+
+                <input id="institution_name"
+                       placeholder="Institution Name"
+                       class="w-full p-2 border rounded mb-2" />
+
+                <input id="qualification"
+                       placeholder="Qualification"
+                       class="w-full p-2 border rounded mb-2" />
+
+                <input id="field_of_study"
+                       placeholder="Field of Study"
+                       class="w-full p-2 border rounded mb-2" />
+
+                <input id="level"
+                       placeholder="Level (e.g NQF 6)"
+                       class="w-full p-2 border rounded mb-2" />
+
+                <div class="grid grid-cols-2 gap-2">
+
+                    <input id="start_date" type="date"
+                           class="w-full p-2 border rounded mb-2" />
+
+                    <input id="end_date" type="date"
+                           class="w-full p-2 border rounded mb-2" />
+
+                </div>
+
+                <label class="flex items-center gap-2 text-sm mb-3">
+                    <input type="checkbox" id="completed" />
+                    Completed Qualification
+                </label>
+
+                <button onclick="saveEducation()"
+                        class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                    Save Education
+                </button>
+
+            </div>
+
+            <!-- ================= LIST ================= -->
+            <div class="space-y-4">
+
+                @foreach (var e in education)
+                {
+                    <div class="bg-white p-5 rounded-xl shadow">
+
+                        <div class="flex justify-between">
+
+                            <div>
+                                <h2 class="font-bold text-lg">
+                                    @e.institution_name
+                                </h2>
+
+                                <p class="text-gray-600">
+                                    @e.qualification
+                                </p>
+
+                                <p class="text-sm text-gray-500">
+                                    @e.field_of_study • @e.level
+                                </p>
+
+                                <p class="text-xs text-gray-400 mt-1">
+                                    @e.start_date - @e.end_date
+                                </p>
+
+                                <p class="text-sm mt-2 font-medium">
+                                    @(e.completed)
+                                </p>
+                            </div>
+
+                            <div>
+                                <button onclick="deleteEducation(@e.id)"
+                                        class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">
+                                    Delete
+                                </button>
+                            </div>
+
+                        </div>
+
+                    </div>
+                }
+
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+
+<!-- ================= SCRIPTS ================= -->
+<script>
+
+    function toggleForm() {
+        $("#formBox").toggleClass("hidden");
+    }
+
+    function saveEducation() {
+
+        var data = {
+            institution_name: $("#institution_name").val(),
+            qualification: $("#qualification").val(),
+            field_of_study: $("#field_of_study").val(),
+            level: $("#level").val(),
+            start_date: $("#start_date").val(),
+            end_date: $("#end_date").val(),
+            completed: $("#completed").is(":checked")
+        };
+
+        $.ajax({
+            url: '/Education/Add',
+            type: 'POST',
+            data: data,
+            success: function (res) {
+                if (res.success) {
+                    location.reload();
+                } else {
+                    alert(res.message);
+                }
+            }
+        });
+    }
+
+    function deleteEducation(id) {
+
+        $.ajax({
+            url: '/Education/Delete',
+            type: 'POST',
+            data: { id: id },
+            success: function (res) {
+                if (res.success) {
+                    location.reload();
+                } else {
+                    alert(res.message);
+                }
+            }
+        });
+    }
+
+</script>
+
+
+
+
+
+
+
+
+
+
+

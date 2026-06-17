@@ -1,0 +1,222 @@
+﻿<div class="bg-white rounded-2xl shadow p-6">
+
+    <h2 class="text-xl font-bold mb-1">Skills</h2>
+    <p class="text-sm text-gray-500 mb-4">
+        Search, select or add new skills
+    </p>
+
+    <!-- SEARCH INPUT -->
+    <input type="text"
+           id="skillSearch"
+           placeholder="Search skills..."
+           class="w-full border rounded-lg p-3 mb-3">
+
+    <!-- DROPDOWN RESULTS -->
+    <div id="skillResults"
+         class="border rounded-lg max-h-40 overflow-y-auto bg-white"
+         style="display:none;"></div>
+
+    <!-- SELECTED SKILLS -->
+    <div id="selectedSkills"
+         class="flex flex-wrap gap-2 mt-4"></div>
+
+    <!-- SAVE -->
+    <button type="button"
+            onclick="saveSkills()"
+            class="mt-5 bg-green-600 text-white px-4 py-2 rounded-lg">
+        Save Skills
+    </button>
+
+</div>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+<script>
+
+    // ======================
+    // GLOBAL STATE
+    // ======================
+    // let selectedSkills = [];
+     let selectedSkills = @Html.Raw(Json.Encode(ViewBag.UserSkills ?? new List<object>()));
+    let searchTimeout = null;
+
+    // ======================
+    // SEARCH SKILLS
+    // ======================
+    $("#skillSearch").on("keyup", function () {
+
+        clearTimeout(searchTimeout);
+
+        let term = $(this).val();
+
+        if (!term || term.length < 2) {
+            $("#skillResults").css("display", "none");
+            return;
+        }
+
+        searchTimeout = setTimeout(function () {
+
+            $.ajax({
+                url: '/Education/SearchSkills',
+                type: 'GET',
+                data: { term: term },
+
+                success: function (data) {
+
+                    console.log("SKILLS:", data);
+
+                    let html = "";
+
+                    if (!data || data.length === 0) {
+
+                        html = `<div class="p-2 text-gray-500">
+                                    No skills found. Click to add.
+                                </div>`;
+                    }
+                    else {
+
+                        data.forEach(s => {
+                            html += `
+                                <div onclick="selectSkill('${s.id}', '${s.name}')"
+                                     class="p-2 hover:bg-gray-200 cursor-pointer">
+                                    ${s.name}
+                                </div>`;
+                        });
+                    }
+
+                    html += `
+                        <div onclick="createSkill($('#skillSearch').val())"
+                             class="p-2 text-blue-600 hover:bg-gray-200 cursor-pointer border-t">
+                            + Add new skill
+                        </div>
+                    `;
+
+                    $("#skillResults")
+                        .html(html)
+                        .css("display", "block");
+
+                },
+
+                error: function (xhr) {
+                    console.log(xhr.responseText);
+                    alert("Search failed");
+                }
+            });
+
+        }, 300);
+    });
+
+    // ======================
+    // SELECT SKILL
+    // ======================
+    function selectSkill(id, name) {
+
+        if (!Array.isArray(selectedSkills)) {
+            selectedSkills = [];
+        }
+
+        let exists = selectedSkills.some(s => s.id === id);
+        if (exists) return;
+
+        selectedSkills = [...selectedSkills, { id, name }];
+
+        renderSkills();
+
+        $("#skillResults").css("display", "none");
+        $("#skillSearch").val("");
+    }
+
+    // ======================
+    // CREATE NEW SKILL
+    // ======================
+    function createSkill(name) {
+
+        if (!name) return;
+
+        $.ajax({
+            url: '/Education/CreateSkill',
+            type: 'POST',
+            data: { name: name },
+
+            success: function (res) {
+
+                if (res && res.success) {
+                    selectSkill(res.id, res.name);
+                } else {
+                    alert("Failed to create skill");
+                }
+            }
+        });
+    }
+
+    // ======================
+    // RENDER SKILLS
+    // ======================
+    function renderSkills() {
+
+        if (!Array.isArray(selectedSkills)) {
+            selectedSkills = [];
+        }
+
+        let html = "";
+
+        selectedSkills.forEach(s => {
+
+            html += `
+            <span class="bg-gray-800 text-white px-3 py-1 rounded-full text-sm flex items-center">
+                ${s.name}
+                <button type="button"
+                        onclick="removeSkill('${s.id}')"
+                        class="ml-2 text-red-300">
+                    x
+                </button>
+            </span>
+        `;
+        });
+
+        $("#selectedSkills").html(html);
+    }
+
+    // ======================
+    // REMOVE SKILL
+    // ======================
+    function removeSkill(id) {
+
+        selectedSkills = selectedSkills.filter(s => s.id !== id);
+        renderSkills();
+    }
+
+    // ======================
+    // SAVE SKILLS
+    // ======================
+    function saveSkills() {
+
+        if (!Array.isArray(selectedSkills)) {
+            selectedSkills = [];
+        }
+
+        let ids = selectedSkills.map(s => s.id);
+
+        $.ajax({
+            url: '/Education/SaveUserSkills',
+            type: 'POST',
+            data: { skillIds: ids },
+            traditional: true,
+
+            success: function () {
+                alert("Skills saved successfully");
+            },
+
+            error: function (xhr) {
+                console.log(xhr.responseText);
+                alert("Failed to save skills");
+            }
+        });
+
+    
+    }
+    $(document).ready(function () {
+        renderSkills();
+    });
+
+</script>
