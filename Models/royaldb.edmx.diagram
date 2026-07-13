@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="43237fb0dc9742d9b7c90288e798363f" Name="Diagram1">
+        <EntityTypeShape EntityType="RoyalPortalDbModel.analytics_events" Width="1.5" PointX="5.25" PointY="12.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="RoyalPortalDbModel.application" Width="1.5" PointX="8.25" PointY="23.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="RoyalPortalDbModel.audit_logs" Width="1.5" PointX="5.25" PointY="19" IsExpanded="true" />
+        <EntityTypeShape EntityType="RoyalPortalDbModel.bursary" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RoyalPortalDbModel.company" Width="1.5" PointX="3.75" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="RoyalPortalDbModel.company_users" Width="1.5" PointX="5.25" PointY="28.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="RoyalPortalDbModel.cours" Width="1.5" PointX="6" PointY="16.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="RoyalPortalDbModel.district" Width="1.5" PointX="1.5" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="RoyalPortalDbModel.document" Width="1.5" PointX="5.25" PointY="24.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="RoyalPortalDbModel.education" Width="1.5" PointX="7.5" PointY="38" IsExpanded="true" />
+        <EntityTypeShape EntityType="RoyalPortalDbModel.event" Width="1.5" PointX="0.75" PointY="24.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="RoyalPortalDbModel.generated_cvs" Width="1.5" PointX="5.25" PointY="31.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="RoyalPortalDbModel.interest" Width="1.5" PointX="0.75" PointY="21.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="RoyalPortalDbModel.interview" Width="1.5" PointX="10.5" PointY="24" IsExpanded="true" />
+        <EntityTypeShape EntityType="RoyalPortalDbModel.opportunity" Width="1.5" PointX="6" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="RoyalPortalDbModel.opportunity_categories" Width="1.5" PointX="3.75" PointY="9.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="RoyalPortalDbModel.opportunity_documents" Width="1.5" PointX="8.25" PointY="7.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="RoyalPortalDbModel.partner" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RoyalPortalDbModel.password_resets" Width="1.5" PointX="5.25" PointY="34.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="RoyalPortalDbModel.skill" Width="1.5" PointX="6" PointY="49.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="RoyalPortalDbModel.user_courses" Width="1.5" PointX="8.25" PointY="20.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="RoyalPortalDbModel.user_sessions" Width="1.5" PointX="5.25" PointY="40.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="RoyalPortalDbModel.user_skills" Width="1.5" PointX="8.25" PointY="28.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="RoyalPortalDbModel.user" Width="1.5" PointX="3" PointY="22.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="RoyalPortalDbModel.verification" Width="1.5" PointX="5.25" PointY="45.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="RoyalPortalDbModel.work_experience" Width="1.5" PointX="10.5" PointY="38.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="RoyalPortalDbModel.youth_profiles" Width="1.5" PointX="5.25" PointY="52.75" IsExpanded="true" />
+        <AssociationConnector Association="RoyalPortalDbModel.FK__analytics__user___37703C52" ManuallyRouted="false" />
+        <AssociationConnector Association="RoyalPortalDbModel.FK__applicati__oppor__19DFD96B" ManuallyRouted="false" />
+        <AssociationConnector Association="RoyalPortalDbModel.FK__applicati__user___18EBB532" ManuallyRouted="false" />
+        <AssociationConnector Association="RoyalPortalDbModel.FK__interview__appli__1DB06A4F" ManuallyRouted="false" />
+        <AssociationConnector Association="RoyalPortalDbModel.FK__audit_log__user___3C34F16F" ManuallyRouted="false" />
+        <AssociationConnector Association="RoyalPortalDbModel.FK__companies__distr__7E37BEF6" ManuallyRouted="false" />
+        <AssociationConnector Association="RoyalPortalDbModel.FK__company_u__compa__01142BA1" ManuallyRouted="false" />
+        <AssociationConnector Association="RoyalPortalDbModel.FK__opportuni__compa__07C12930" ManuallyRouted="false" />
+        <AssociationConnector Association="RoyalPortalDbModel.FK__company_u__user___02084FDA" ManuallyRouted="false" />
+        <AssociationConnector Association="RoyalPortalDbModel.FK__user_cour__cours__245D67DE" ManuallyRouted="false" />
+        <AssociationConnector Association="RoyalPortalDbModel.FK__opportuni__distr__09A971A2" ManuallyRouted="false" />
+        <AssociationConnector Association="RoyalPortalDbModel.FK__documents__user___73BA3083" ManuallyRouted="false" />
+        <AssociationConnector Association="RoyalPortalDbModel.FK__education__user___628FA481" ManuallyRouted="false" />
+        <AssociationConnector Association="RoyalPortalDbModel.FK_education_user" ManuallyRouted="false" />
+        <AssociationConnector Association="RoyalPortalDbModel.FK__generated__user___787EE5A0" ManuallyRouted="false" />
+        <AssociationConnector Association="RoyalPortalDbModel.FK__opportuni__categ__08B54D69" ManuallyRouted="false" />
+        <AssociationConnector Association="RoyalPortalDbModel.FK__opportuni__oppor__114A936A" ManuallyRouted="false" />
+        <AssociationConnector Association="RoyalPortalDbModel.FK__password___user___4316F928" ManuallyRouted="false" />
+        <AssociationConnector Association="RoyalPortalDbModel.FK__user_skil__skill__6A30C649" ManuallyRouted="false" />
+        <AssociationConnector Association="RoyalPortalDbModel.FK__user_cour__user___236943A5" ManuallyRouted="false" />
+        <AssociationConnector Association="RoyalPortalDbModel.FK__user_sess__user___47DBAE45" ManuallyRouted="false" />
+        <AssociationConnector Association="RoyalPortalDbModel.FK__user_skil__user___693CA210" ManuallyRouted="false" />
+        <AssociationConnector Association="RoyalPortalDbModel.FK__verificat__user___31B762FC" ManuallyRouted="false" />
+        <AssociationConnector Association="RoyalPortalDbModel.FK__verificat__verif__32AB8735" ManuallyRouted="false" />
+        <AssociationConnector Association="RoyalPortalDbModel.FK__work_expe__user___66603565" ManuallyRouted="false" />
+        <AssociationConnector Association="RoyalPortalDbModel.FK__youth_pro__user___5CD6CB2B" ManuallyRouted="false" />
+        <AssociationConnector Association="RoyalPortalDbModel.FK_work_user" ManuallyRouted="false" />
+        <AssociationConnector Association="RoyalPortalDbModel.event_registrations" ManuallyRouted="false" />
+        <AssociationConnector Association="RoyalPortalDbModel.opportunity_skills" ManuallyRouted="false" />
+        <AssociationConnector Association="RoyalPortalDbModel.user_interests" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

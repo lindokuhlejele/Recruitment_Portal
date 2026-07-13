@@ -1,0 +1,297 @@
+﻿@{
+    ViewBag.Title = "Opportunities";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<head>
+    <meta charset="utf-8" />
+    <title>Opportunities</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+
+<body class="bg-gray-950 text-white">
+
+    <div class="flex min-h-screen">
+
+        <!-- ================= SIDEBAR ================= -->
+        <aside class="w-64 bg-gray-900 border-r border-gray-800 p-5">
+
+            <h1 class="text-2xl font-bold text-[#D4AF37] mb-8">
+                Company Portal
+            </h1>
+
+            <nav class="space-y-3">
+
+                <a href="/Company/Dashboard"
+                   class="block py-2 px-3 rounded bg-gray-800">
+                    Dashboard
+                </a>
+
+                <a href="/Company/Opportunities"
+                   class="block py-2 px-3 rounded hover:bg-gray-800">
+                    Opportunities
+                </a>
+
+                <a href="/Company/Applications"
+                   class="block py-2 px-3 rounded hover:bg-gray-800">
+                    Applications
+                </a>
+
+                <a href="/Company/Users"
+                   class="block py-2 px-3 rounded hover:bg-gray-800">
+                    Company Users
+                </a>
+
+                <a href="/Company/Profile"
+                   class="block py-2 px-3 rounded hover:bg-gray-800">
+                    Company Profile
+                </a>
+
+            </nav>
+
+        </aside>
+
+        <main class="flex-1 p-8">
+
+            <!-- HEADER -->
+            <div class="flex justify-between items-center mb-6">
+
+                <div>
+                    <h1 class="text-3xl font-bold">Opportunities</h1>
+                    <p class="text-gray-400">Manage company job postings</p>
+                </div>
+
+                <button onclick="openCreateModal()"
+                        class="bg-[#D4AF37] text-black px-5 py-2 rounded-xl font-bold">
+                    + Create Opportunity
+                </button>
+
+            </div>
+
+            <!-- TABLE -->
+            <div class="bg-gray-900 rounded-xl border border-gray-800 overflow-hidden">
+
+                <table class="w-full text-left">
+
+                    <thead class="bg-gray-800 text-gray-300">
+                        <tr>
+                            <th class="p-3">Title</th>
+                            <th>Status</th>
+                            <th>Location</th>
+                            <th>Stipend</th>
+                            <th>Created</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        @foreach (var item in Model)
+                        {
+                            <tr class="border-b border-gray-800">
+
+                                <td class="p-3">@item.title</td>
+
+                                <td>
+                                    <span class="px-2 py-1 text-xs rounded
+                                @(item.status == "Active" ? "bg-green-600" : "bg-red-600")">
+                                        @item.status
+                                    </span>
+                                </td>
+
+                                <td>@item.location</td>
+
+                                <td>@item.stipend</td>
+
+                                <td class="text-gray-400">@item.created_at</td>
+
+                                <td class="space-x-2">
+
+                                    <button onclick="editOpportunity('@item.id','@item.title','@item.description','@item.location','@item.requirements','@item.stipend')"
+                                            class="text-blue-400">
+                                        Edit
+                                    </button>
+                                    <a href="@Url.Action("Pipeline","Company",
+                                          new { opportunityId = item.id })"
+                                       class="text-green-400">
+                                        Applicants
+                                    </a>
+                                    <button onclick="closeOpportunity('@item.id')"
+                                            class="text-red-400">
+                                        Close
+                                    </button>
+
+                                </td>
+
+                            </tr>
+                        }
+
+                    </tbody>
+
+                </table>
+
+            </div>
+        </main>
+
+    </div>
+
+    <!--===============================Create Modal=========-->
+    <div id="createModal"
+         class="fixed inset-0 bg-black/70 hidden items-center justify-center">
+
+        <div class="bg-gray-900 p-6 rounded-xl w-[600px] border border-gray-800">
+
+            <h2 class="text-xl font-bold mb-4">Create Opportunity</h2>
+
+            <div class="grid grid-cols-2 gap-3">
+
+                <input id="title" placeholder="Title"
+                       class="bg-gray-800 p-2 rounded">
+
+                <input id="location" placeholder="Location"
+                       class="bg-gray-800 p-2 rounded">
+
+                <input id="stipend" placeholder="Stipend"
+                       class="bg-gray-800 p-2 rounded">
+
+                <input id="closingDate" type="date"
+                       class="bg-gray-800 p-2 rounded">
+
+            </div>
+
+            <textarea id="description"
+                      placeholder="Description"
+                      class="w-full bg-gray-800 p-2 rounded mt-3"></textarea>
+
+            <textarea id="requirements"
+                      placeholder="Requirements"
+                      class="w-full bg-gray-800 p-2 rounded mt-3"></textarea>
+
+            <button onclick="createOpportunity()"
+                    class="mt-4 w-full bg-[#D4AF37] text-black py-2 rounded font-bold">
+                Save
+            </button>
+
+        </div>
+
+    </div>
+
+    <!--=====================================Edit Modal===============================-->
+    <div id="editModal"
+         class="fixed inset-0 bg-black/70 hidden items-center justify-center">
+
+        <div class="bg-gray-900 p-6 rounded-xl w-[600px] border border-gray-800">
+
+            <h2 class="text-xl font-bold mb-4">Edit Opportunity</h2>
+
+            <input type="hidden" id="editId" />
+
+            <div class="grid grid-cols-2 gap-3">
+
+                <input id="editTitle" class="bg-gray-800 p-2 rounded">
+
+                <input id="editLocation" class="bg-gray-800 p-2 rounded">
+
+                <input id="editStipend" class="bg-gray-800 p-2 rounded">
+
+            </div>
+
+            <textarea id="editDescription"
+                      class="w-full bg-gray-800 p-2 rounded mt-3"></textarea>
+
+            <textarea id="editRequirements"
+                      class="w-full bg-gray-800 p-2 rounded mt-3"></textarea>
+
+            <button onclick="updateOpportunity()"
+                    class="mt-4 w-full bg-blue-600 text-white py-2 rounded font-bold">
+                Update
+            </button>
+
+        </div>
+
+    </div>
+
+    <script>
+
+        function openCreateModal() {
+            $("#createModal").removeClass("hidden").addClass("flex");
+        }
+
+        function closeModals() {
+            $("#createModal, #editModal").addClass("hidden");
+        }
+
+        function createOpportunity() {
+
+            var data = {
+                Title: $("#title").val(),
+                Description: $("#description").val(),
+                Location: $("#location").val(),
+                Requirements: $("#requirements").val(),
+                Stipend: $("#stipend").val()
+            };
+
+            $.ajax({
+                url: '/Company/CreateOpportunity',
+                type: 'POST',
+                data: data,
+                success: function (res) {
+                    alert(res.message);
+                    if (res.success) location.reload();
+                }
+            });
+        }
+
+        function editOpportunity(id, title, desc, location, req, stipend) {
+
+            $("#editId").val(id);
+            $("#editTitle").val(title);
+            $("#editDescription").val(desc);
+            $("#editLocation").val(location);
+            $("#editRequirements").val(req);
+            $("#editStipend").val(stipend);
+
+            $("#editModal").removeClass("hidden").addClass("flex");
+        }
+
+        function updateOpportunity() {
+
+            var data = {
+                Id: $("#editId").val(),
+                Title: $("#editTitle").val(),
+                Description: $("#editDescription").val(),
+                Location: $("#editLocation").val(),
+                Requirements: $("#editRequirements").val(),
+                Stipend: $("#editStipend").val()
+            };
+
+            $.ajax({
+                url: '/Company/EditOpportunity',
+                type: 'POST',
+                data: data,
+                success: function (res) {
+                    alert(res.message);
+                    if (res.success) location.reload();
+                }
+            });
+        }
+
+        function closeOpportunity(id) {
+
+            if (!confirm("Close this opportunity?")) return;
+
+            $.ajax({
+                url: '/Company/CloseOpportunity',
+                type: 'POST',
+                data: { id: id },
+                success: function (res) {
+                    if (res.success) location.reload();
+                    else alert("Failed");
+                }
+            });
+        }
+
+    </script>
+

@@ -1,0 +1,120 @@
+﻿@{
+    var docs = ViewBag.Documents as List<Recruitment_Portal.Models.document>;
+}
+
+<div class="bg-gray-900 text-white rounded-2xl p-6 border border-gray-800">
+
+    <h2 class="text-xl font-bold mb-4">
+        My Documents
+    </h2>
+
+    <!-- UPLOAD SECTION -->
+    <div class="grid md:grid-cols-2 gap-4">
+
+        <!-- CV -->
+        <div class="border border-dashed border-gray-600 rounded-xl p-4">
+
+            <h3 class="font-semibold mb-2">CV</h3>
+
+            <input type="file" id="cvFile" class="mb-3">
+
+            <button onclick="uploadDoc('CV', 'cvFile')"
+                    class="bg-[#D4AF37] text-black px-4 py-2 rounded-lg w-full">
+                Upload CV
+            </button>
+
+        </div>
+
+        <!-- Qualification -->
+        <div class="border border-dashed border-gray-600 rounded-xl p-4">
+
+            <h3 class="font-semibold mb-2">Qualification</h3>
+
+            <input type="file" id="qualFile" class="mb-3">
+
+            <button onclick="uploadDoc('Qualification', 'qualFile')"
+                    class="bg-blue-600 text-white px-4 py-2 rounded-lg w-full">
+                Upload
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- EXISTING DOCUMENTS -->
+    <div class="mt-6">
+
+        <h3 class="font-bold mb-3">Uploaded Documents</h3>
+
+        <div class="space-y-2">
+
+            @if (docs != null && docs.Any())
+            {
+                foreach (var d in docs)
+                {
+                    <div class="flex justify-between items-center bg-gray-800 p-3 rounded-lg">
+
+                        <div>
+                            <div class="font-semibold">
+                                @d.document_type
+                            </div>
+
+                            <div class="text-xs text-gray-400">
+                                @d.uploaded_at?.ToString("dd MMM yyyy")
+                            </div>
+                        </div>
+
+                        <a href="@d.file_url"
+                           target="_blank"
+                           class="text-[#D4AF37] font-bold">
+                            View
+                        </a>
+
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="text-gray-400 text-sm">
+                    No documents uploaded yet
+                </div>
+            }
+
+        </div>
+
+    </div>
+
+</div>
+<script>
+    function uploadDoc(type, inputId) {
+        var fileInput = document.getElementById(inputId);
+
+        if (!fileInput.files.length) {
+            alert("Please select a file");
+            return;
+        }
+
+        var formData = new FormData();
+        formData.append("DocumentType", type);
+        formData.append("File", fileInput.files[0]);
+
+        $.ajax({
+            url: '/Candidate/UploadDocument',
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+
+            success: function (res) {
+                alert(res.message);
+                if (res.success) {
+                    location.reload();
+                }
+            },
+
+            error: function () {
+                alert("Upload failed");
+            }
+        });
+    }
+</script>

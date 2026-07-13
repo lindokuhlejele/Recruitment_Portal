@@ -1,0 +1,204 @@
+﻿@{
+    ViewBag.Title = "Company Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Company Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-950 text-white">
+
+    <div class="flex min-h-screen">
+
+        <!-- ================= SIDEBAR ================= -->
+        <aside class="sticky w-64 bg-gray-900 border-r border-gray-800 p-5">
+
+            <h1 class="text-2xl font-bold text-[#D4AF37] mb-8">
+                Company Portal
+            </h1>
+
+            <nav class="space-y-3">
+
+                <a href="/Company/Dashboard"
+                   class="block py-2 px-3 rounded bg-gray-800">
+                    Dashboard
+                </a>
+
+                <a href="/Company/Opportunities"
+                   class="block py-2 px-3 rounded hover:bg-gray-800">
+                    Opportunities
+                </a>
+
+                <a href="/Company/Applicants"
+                   class="block py-2 px-3 rounded hover:bg-gray-800">
+                    Applications
+                </a>
+
+                <a href="/Company/Users"
+                   class="block py-2 px-3 rounded hover:bg-gray-800">
+                    Company Users
+                </a>
+
+                <a href="/Company/Profile"
+                   class="block py-2 px-3 rounded hover:bg-gray-800">
+                    Company Profile
+                </a>
+
+            </nav>
+
+        </aside>
+
+        <!-- ================= MAIN CONTENT ================= -->
+        <main class="flex-1 p-8">
+
+            <!-- HEADER -->
+            <div class="flex justify-between items-center mb-8">
+
+                <div>
+                    <h2 class="text-3xl font-bold">Dashboard</h2>
+                    <p class="text-gray-400">Overview of your recruitment activity</p>
+                </div>
+
+                <button class="bg-[#D4AF37] text-black px-5 py-2 rounded-xl font-bold"
+                        onclick="location.href='/Company/Opportunities'">
+                    + New Opportunity
+                </button>
+
+            </div>
+
+            <!-- ================= STATS CARDS ================= -->
+            <div class="grid grid-cols-4 gap-6 mb-10">
+
+                <div class="bg-gray-900 p-5 rounded-xl border border-gray-800">
+                    <p class="text-gray-400">Total Opportunities</p>
+                    <h3 class="text-3xl font-bold">
+                        @ViewBag.TotalOpportunities
+                    </h3>
+                </div>
+
+                <div class="bg-gray-900 p-5 rounded-xl border border-gray-800">
+                    <p class="text-gray-400">Active Opportunities</p>
+                    <h3 class="text-3xl font-bold text-green-400">
+                        @ViewBag.ActiveOpportunities
+                    </h3>
+                </div>
+
+                <div class="bg-gray-900 p-5 rounded-xl border border-gray-800">
+                    <p class="text-gray-400">Applications Received</p>
+                    <h3 class="text-3xl font-bold text-blue-400">
+                        @ViewBag.ApplicationsReceived
+                    </h3>
+                </div>
+
+                <div class="bg-gray-900 p-5 rounded-xl border border-gray-800">
+                    <p class="text-gray-400">Interviews Scheduled</p>
+                    <h3 class="text-3xl font-bold text-purple-400">
+                        @ViewBag.InterviewsScheduled
+                    </h3>
+                </div>
+
+            </div>
+
+            <!-- ================= QUICK ACTIONS ================= -->
+            <div class="bg-gray-900 p-6 rounded-xl border border-gray-800 mb-10">
+
+                <h3 class="text-xl font-bold mb-4">Quick Actions</h3>
+
+                <div class="flex gap-4">
+
+                    <a href="/Company/Opportunities"
+                       class="bg-gray-800 px-4 py-3 rounded-lg hover:bg-gray-700">
+                        Manage Opportunities
+                    </a>
+
+                    <a href="/Company/Applications"
+                       class="bg-gray-800 px-4 py-3 rounded-lg hover:bg-gray-700">
+                        View Applications
+                    </a>
+
+                    <a href="/Company/Users"
+                       class="bg-gray-800 px-4 py-3 rounded-lg hover:bg-gray-700">
+                        Manage Users
+                    </a>
+
+                </div>
+
+            </div>
+
+            <!-- ================= RECENT OPPORTUNITIES ================= -->
+            <div class="bg-gray-900 p-6 rounded-xl border border-gray-800">
+
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-xl font-bold">Recent Opportunities</h3>
+
+                    <a href="/Company/Opportunities"
+                       class="text-[#D4AF37]">
+                        View All
+                    </a>
+                </div>
+
+                <table class="w-full text-left">
+
+                    <thead class="text-gray-400 border-b border-gray-800">
+                        <tr>
+                            <th class="py-2">Title</th>
+                            <th>Status</th>
+                            <th>Created</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        @if (ViewBag.RecentOpportunities != null)
+                        {
+                            foreach (var item in ViewBag.RecentOpportunities)
+                            {
+                                <tr class="border-b border-gray-800">
+                                    <td class="py-3">@item.title</td>
+
+                                    <td>
+                                        <span class="px-2 py-1 text-xs rounded bg-green-600">
+                                            @item.status
+                                        </span>
+                                    </td>
+
+                                    <td class="text-gray-400">
+                                        @item.created_at
+                                    </td>
+
+                                    <td>
+                                        <a href="/Company/Applicants?opportunityId=@item.id"
+                                           class="text-blue-400">
+                                            View Applicants
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="4" class="py-4 text-gray-500">
+                                    No opportunities found
+                                </td>
+                            </tr>
+                        }
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </main>
+
+    </div>
+
+</body>
+</html>

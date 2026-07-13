@@ -8,6 +8,7 @@
     @*@Styles.Render("~/Content/css")*@
 
     @Scripts.Render("~/bundles/modernizr")
+
     <!-- Tailwind CDN (IMPORTANT - without this your UI breaks) -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -16,7 +17,19 @@
         }
     </style>
 </head>
-<body class="bg-[#F7F9F6]">
+@using Recruitment_Portal.Utils
+
+@{
+    string firstName = null;
+    bool isLoggedIn = false;
+
+    if (Session["UserId"] != null)
+    {
+        isLoggedIn = true;
+        firstName = AuthHelper.GetFirstName(Session);
+    }
+}
+<body >
 
     <!-- HEADER -->
     <header class="border-b bg-white/90 backdrop-blur-md sticky top-0 z-40">
@@ -31,24 +44,37 @@
                 </div>
 
                 <div>
-                    <h1 class="text-xl font-bold">Royal Recruitment</h1>
+                    <h1 class="text-xl font-bold text-[#0A5230]">Royal Recruitment</h1>
                     <p class="text-xs font-bold text-[#0A5230] uppercase tracking-widest">Portal</p>
                 </div>
             </div>
 
-            <div class="flex gap-3 text-xs">
+            <div class="flex items-center gap-3">
+                <a href="@Url.Action("Index","Opportunities")"
+                   class="hover:text-[#D4AF37]">
+                    Opportunities
+                </a>
 
-                <div class="flex items-center gap-2 bg-emerald-50 px-2 py-1 rounded-lg">
-                    <span class="font-bold text-[#0A5230]">Youth:</span>
+                @if (isLoggedIn)
+                {
+                    <div class="text-sm font-medium text-gray-700">
+                        👋 Hi, @firstName
+                    </div>
 
-                    <button onclick="openAuth('candidate','login')" class="px-2 py-1 hover:text-emerald-800">
-                        Sign In
+                    <a href="/Account/Logout"
+                       class="text-sm px-3 py-1 rounded bg-red-50 text-red-600 hover:bg-red-100">
+                        Logout
+                    </a>
+                }
+                else
+                {
+                    <button onclick="openAuthModal();"
+                            class="px-6 py-3 rounded-xl font-bold bg-[#D4AF37] text-emerald-950 hover:bg-yellow-500 transition text-sm">
+                        Login/Register
                     </button>
 
-                    <button onclick="openAuth('candidate','register')" class="bg-[#0A5230] text-[#D4AF37] px-3 py-1 rounded-lg font-bold">
-                        Register
-                    </button>
-                </div>
+
+                }
 
             </div>
         </div>
@@ -99,6 +125,12 @@
         </div>
 
     </footer>
+
+
+    <!--================Company Reg Modal=================-->
+
+
+
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")

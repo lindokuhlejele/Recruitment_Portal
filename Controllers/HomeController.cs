@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Recruitment_Portal.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,6 +11,13 @@ namespace Recruitment_Portal.Controllers
     {
         public ActionResult Index()
         {
+            using (var db = new RoyalPortalDbEntities())
+            {
+                ViewBag.Districts = db.districts
+                                      .OrderBy(x => x.name)
+                                      .ToList();
+            }
+
             return View();
         }
 
